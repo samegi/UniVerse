@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="327.0" prefWidth="600" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="co.edu.universe.controllers.CrudClaseController">
+
+    <children>
+      <ImageView fitHeight="344.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/CrudClase.jpg" />
+         </image>
+      </ImageView>
+
+        <Label layoutX="40" layoutY="80" text="Asignatura" />
+
+        <Label layoutX="132.0" layoutY="108.0" text="Hora Inicio" />
+        <TextField fx:id="txtHoraInicio" layoutX="120.0" layoutY="125.0" prefHeight="25.0" prefWidth="75.0" />
+
+        <Button fx:id="btnGuardar" layoutX="63.0" layoutY="296.0" onAction="#guardarClase" text="Guardar" />
+        <Button fx:id="btnActualizar" layoutX="156.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
+
+        <TableView fx:id="tblClases" layoutX="309.0" layoutY="52.0" prefHeight="218.0" prefWidth="281.0">
+            <columns>
+            <TableColumn fx:id="colAsignatura" prefWidth="93.0" text="Asignatura" />
+                <TableColumn fx:id="colDia" prefWidth="56.5" text="Dia" />
+                <TableColumn fx:id="colHoraInicio" prefWidth="62.5" text="Inicio" />
+            <TableColumn fx:id="colHoraFin" prefWidth="67.0" text="Fin" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="btnEliminar" layoutX="420.0" layoutY="296.0" onAction="#pantallaEliminarClase" text="Eliminar" />
+      <ComboBox fx:id="cmbAsignatura" layoutX="120.0" layoutY="76.0" prefWidth="150.0" />
+      <Label layoutX="213.0" layoutY="108.0" text="Hora Fin" />
+      <TextField fx:id="txtHoraFin" layoutX="202.0" layoutY="125.0" prefHeight="25.0" prefWidth="68.0" />
+      <ComboBox fx:id="cmbDia" layoutX="22.0" layoutY="125.0" prefHeight="25.0" prefWidth="88.0" />
+      <Label layoutX="63.0" layoutY="108.0" text="Dia" />
+      <Label layoutX="43.0" layoutY="160.0" text="Profesor 1" />
+      <ComboBox fx:id="cmbProfesor1" layoutX="120.0" layoutY="156.0" prefWidth="150.0" />
+      <Label layoutX="43.0" layoutY="192.0" text="Profesor 2" />
+      <ComboBox fx:id="cmbProfesor2" layoutX="120.0" layoutY="188.0" prefWidth="150.0" />
+      <Label layoutX="54.0" layoutY="227.0" text="Salon" />
+      <ComboBox fx:id="cmbSalon" layoutX="120.0" layoutY="223.0" prefWidth="150.0" />
+      <Button fx:id="btnVolver" layoutX="527.0" layoutY="14.0" onAction="#regresarMenu" text="Volver" />
+    </children>
+</AnchorPane>

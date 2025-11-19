@@ -1,0 +1,83 @@
+/* ============================
+   ESTILOS GENERALES
+============================ */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f2f7fb; /* azul gris claro */
+}
+
+/* ============================
+   TITULOS
+============================ */
+.label-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a4d7c; /* azul profundo elegante */
+}
+
+/* ============================
+   LABELS
+============================ */
+.label {
+    -fx-text-fill: #3d4b5a;
+    -fx-font-size: 14px;
+}
+
+/* ============================
+   TEXTFIELDS y COMBOBOXES
+============================ */
+.text-field, .combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c5d3e0;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px;
+}
+
+.text-field:focused, .combo-box:focused {
+    -fx-border-color: #4aa3ff; /* azul clarito */
+    -fx-effect: dropshadow( gaussian , #a4cfff , 10, 0.3 , 0 , 0 );
+}
+
+/* ============================
+   BOTONES
+============================ */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #6ab7ff, #4aa3ff);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #82c4ff, #5cb4ff);
+}
+
+.button:pressed {
+    -fx-background-color: #4aa3ff;
+}
+
+/* ============================
+   TABLA
+============================ */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c5d3e0;
+    -fx-border-radius: 10px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #dce9f5; /* azul muy suave */
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f6f9fc;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #b5d9ff !important;
+}

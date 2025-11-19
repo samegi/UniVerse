@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.MenuDirCarreraController">
+   <children>
+      <ImageView fitHeight="336.0" fitWidth="626.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/MenuDirCarrera.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnSemestre" layoutX="79.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarSemestre" prefHeight="25.0" prefWidth="77.0" text="Semestre" />
+      <Button fx:id="btnSalir" layoutX="487.0" layoutY="14.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="25.0" prefWidth="99.0" text="Cerrar Sesion" />
+      <Button fx:id="btnAsignatura" layoutX="202.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarAsignatura" prefHeight="25.0" prefWidth="77.0" text="Asignatura" />
+      <Button fx:id="btnClase" layoutX="322.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarClase" prefHeight="25.0" prefWidth="77.0" text="Clase" />
+      <Button layoutX="440.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Estudiantes" />
+   </children>
+</AnchorPane>

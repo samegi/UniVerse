@@ -1,20 +1,15 @@
 -- === Roles ===
 -- Solo inserta si el registro no existe
--- INSERT INTO role (id, nombre)
--- SELECT 1, 'ESTUDIANTE' WHERE NOT EXISTS (SELECT 1 FROM role WHERE id = 1);
-
--- INSERT INTO role (id, nombre)
--- SELECT 2, 'PROFESOR' WHERE NOT EXISTS (SELECT 1 FROM role WHERE id = 2);
-
-INSERT INTO rol (id, nombre)
-SELECT 3, 'DirectorCarrera' WHERE NOT EXISTS (SELECT 1 FROM rol WHERE id = 3);
-
--- INSERT INTO role (id, nombre)
--- SELECT 4, 'DIRECTOR_DEPARTAMENTO' WHERE NOT EXISTS (SELECT 1 FROM role WHERE id = 4);
+MERGE INTO rol (id, nombre_rol) KEY (id)
+    VALUES
+    (1, 'ADMIN'),
+    (2, 'ESTUDIANTE'),
+    (3, 'DIRECTOR_CARRERA'),
+    (4, 'PROFESOR');
 
 -- === Usuarios ===
-INSERT INTO usuario (id, nombre, rol_id)
-SELECT 1, 'samegi', 3 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 1); -- DIRECTOR_CARRERA
+INSERT INTO usuario (nombre, rol_id)
+SELECT 'samegi', 3 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 1); -- DIRECTOR_CARRERA
 
 -- INSERT INTO usuario (id, nombre, role_id)
 -- SELECT 2, 'Carlos Mendoza', 4 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 2); -- DIRECTOR_DEPARTAMENTO

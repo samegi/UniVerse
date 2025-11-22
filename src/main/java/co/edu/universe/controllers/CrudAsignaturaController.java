@@ -14,8 +14,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import javafx.stage.FileChooser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
 
 @Component
 public class CrudAsignaturaController {
@@ -103,6 +109,7 @@ public class CrudAsignaturaController {
             }
         });
     }
+
 
     // ===========================================================
     //                   CRUD OPERATIONS
@@ -195,7 +202,34 @@ public class CrudAsignaturaController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+    @FXML
+    private void onCargarJsonClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo JSON");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Archivos JSON", "*.json")
+        );
 
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file == null) {
+            mostrarError("Archivo vacio", "No se seleccionó ningún archivo.");
+            return;
+        }
+
+        try (InputStream input = new FileInputStream(file)) {
+
+            List<Asignatura> creadas =
+                    asignaturaService.cargarAsignaturasDesdeJson(input, Sesion.getUsuario());
+
+
+            // Si quieres refrescar la tabla
+            cargarDatos();
+
+        } catch (Exception e) {
+            mostrarError("Error JSON", "Error al cargar JSON: " + e.getMessage());
+        }
+    }
     // ===========================================================
     //                       VOLVER
     // ===========================================================

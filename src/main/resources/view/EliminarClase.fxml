@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefWidth="700" prefHeight="500"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.universe.controllers.EliminarClaseController">
+
+    <children>
+
+        <Label text="Eliminar Clase" layoutX="20" layoutY="20"
+               style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+        <BarChart fx:id="graficoClases"
+                  layoutX="20" layoutY="60"
+                  prefWidth="660" prefHeight="250">
+            <xAxis>
+                <CategoryAxis label="Clase"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Estudiantes"/>
+            </yAxis>
+        </BarChart>
+
+        <Label text="Seleccione la clase a eliminar:"
+               layoutX="20" layoutY="330"/>
+
+        <ComboBox fx:id="comboClases"
+                  layoutX="220" layoutY="325"
+                  prefWidth="300"/>
+
+        <Button text="Eliminar Clase"
+                layoutX="540" layoutY="325"
+                onAction="#onEliminarClick"
+                style="-fx-background-color: #c62828; -fx-text-fill: white;"/>
+
+    </children>
+
+</AnchorPane>
+

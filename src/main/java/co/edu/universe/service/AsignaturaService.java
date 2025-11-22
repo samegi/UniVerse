@@ -9,9 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,12 +30,6 @@ public class AsignaturaService {
     // -------------------------------------------------------------------------------------
     //                                VALIDACIONES
     // -------------------------------------------------------------------------------------
-
-    private void validarPermisoDirectorCarrera(Usuario usuario) {
-        if (!usuario.getRol().getNombre().equalsIgnoreCase("DirectorCarrera")) {
-            throw new SecurityException("Solo un Director de Carrera puede gestionar asignaturas.");
-        }
-    }
 
     private void validarFechaLimite(Semestre semestre) {
         Instant fechaMaxima = semestreService.calcularFechaMaximaCreacionAsignaturas(semestre);
@@ -74,8 +72,6 @@ public class AsignaturaService {
     // -------------------- CREAR --------------------
 
     public Asignatura crearAsignatura(Asignatura asignatura, Usuario usuario) {
-
-        validarPermisoDirectorCarrera(usuario);
         validarDatos(asignatura);
 
         Semestre semestre = asignatura.getSemestre();
@@ -83,12 +79,57 @@ public class AsignaturaService {
 
         return asignaturaRepository.save(asignatura);
     }
+    @Transactional
+    public List<Asignatura> cargarAsignaturasDesdeJson(InputStream jsonStream, Usuario usuario) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            // Convertir JSON a lista de mapas
+            List<Map<String, Object>> asignaturasJson = mapper.readValue(
+                    jsonStream,
+                    new TypeReference<List<Map<String, Object>>>() {}
+            );
+
+            List<Asignatura> asignaturasCreadas = new ArrayList<>();
+
+            for (Map<String, Object> item : asignaturasJson) {
+
+                Asignatura asignatura = new Asignatura();
+
+                asignatura.setNombre((String) item.get("nombre"));
+                asignatura.setCreditos((Integer) item.get("creditos"));
+                asignatura.setIngles(Boolean.TRUE.equals(item.get("ingles")));
+
+                // -------------------------------
+                //     RESOLVER SEMESTRE
+                // -------------------------------
+                if (!item.containsKey("semestreId")) {
+                    throw new IllegalArgumentException("Cada asignatura debe incluir 'semestreId'.");
+                }
+
+                Long semestreId = Long.valueOf(item.get("semestreId").toString());
+                Semestre semestre = semestreService.buscarSemestrePorId(semestreId);
+                asignatura.setSemestre(semestre);
+
+                // Validaciones ya definidas
+                validarDatos(asignatura);
+                validarFechaLimite(semestre);
+
+                // Guardar
+                Asignatura creada = asignaturaRepository.save(asignatura);
+                asignaturasCreadas.add(creada);
+            }
+
+            return asignaturasCreadas;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer el archivo JSON: " + e.getMessage(), e);
+        }
+    }
 
     // -------------------- ACTUALIZAR --------------------
 
     public Asignatura actualizarAsignatura(Long id, Asignatura datos, Usuario usuario) {
-
-        validarPermisoDirectorCarrera(usuario);
         validarDatos(datos);
 
         Asignatura existente = buscarPorId(id);
@@ -109,9 +150,6 @@ public class AsignaturaService {
 
     @Transactional
     public void eliminarAsignatura(Long id, Usuario usuario) {
-
-        validarPermisoDirectorCarrera(usuario);
-
         Asignatura asignatura = buscarPorId(id);
 
         // Romper relaciones antes de eliminar

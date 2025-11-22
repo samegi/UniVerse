@@ -93,19 +93,19 @@ public class CrudSemestreController {
     // --------------------------------------------------------------
     private boolean validarUnicidad(Semestre s, boolean esActualizacion, Long idActual) {
 
-        // → Validar nombre único
+        // Nombre Unico
         if (semestreService.existeNombre(s.getNombre(), esActualizacion ? idActual : null)) {
             mostrar("Nombre ya existe.", Alert.AlertType.WARNING);
             return false;
         }
 
-        // → Validar fecha de inicio única
+        // Fecha inicio unica
         if (semestreService.existeFechaInicio(s.getFechaInicio(), esActualizacion ? idActual : null)) {
             mostrar("Ya existe un semestre con esa fecha de inicio.", Alert.AlertType.WARNING);
             return false;
         }
 
-        // → Validar fecha de fin única
+        // Fecha fin unica
         if (semestreService.existeFechaFin(s.getFechaFin(), esActualizacion ? idActual : null)) {
             mostrar("Ya existe un semestre con esa fecha de fin.", Alert.AlertType.WARNING);
             return false;

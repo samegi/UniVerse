@@ -3,12 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Spinner?>
 
 <AnchorPane prefHeight="327.0" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.CrudClaseController">
 
@@ -24,38 +24,38 @@
         <ComboBox fx:id="cmbAsignatura" layoutX="120.0" layoutY="76.0" prefWidth="150.0" />
 
         <!-- Día -->
-        <Label layoutX="63.0" layoutY="108.0" text="Día" />
-        <ComboBox fx:id="cmbDia" layoutX="35.0" layoutY="125.0" prefHeight="25.0" prefWidth="75.0" />
+        <Label layoutX="45.0" layoutY="132.0" text="Día" />
+        <ComboBox fx:id="cmbDia" layoutX="26.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
 
         <!-- Hora Inicio -->
-        <Label layoutX="132.0" layoutY="108.0" text="Hora Inicio" />
-        <Spinner fx:id="spnHoraInicio" layoutX="120.0" layoutY="125.0" prefHeight="25.0" prefWidth="60.0" />
-        <Spinner fx:id="spnMinutoInicio" layoutX="185.0" layoutY="125.0" prefHeight="25.0" prefWidth="60.0" />
+        <Label layoutX="112.0" layoutY="132.0" text="Hora Inicio" />
+        <Spinner fx:id="spnHoraInicio" layoutX="93.0" layoutY="149.0" prefHeight="25.0" prefWidth="45.0" />
+        <Spinner fx:id="spnMinutoInicio" layoutX="243.0" layoutY="149.0" prefHeight="25.0" prefWidth="50.0" />
 
         <!-- Hora Fin -->
-        <Label layoutX="213.0" layoutY="108.0" text="Hora Fin" />
-        <Spinner fx:id="spnHoraFin" layoutX="202.0" layoutY="125.0" prefHeight="25.0" prefWidth="60.0" />
-        <Spinner fx:id="spnMinutoFin" layoutX="267.0" layoutY="125.0" prefHeight="25.0" prefWidth="60.0" />
+        <Label layoutX="221.0" layoutY="132.0" text="Hora Fin" />
+        <Spinner fx:id="spnHoraFin" layoutX="196.0" layoutY="149.0" prefHeight="25.0" prefWidth="45.0" />
+        <Spinner fx:id="spnMinutoFin" layoutX="140.0" layoutY="149.0" prefHeight="25.0" prefWidth="50.0" />
 
         <!-- Profesores -->
-        <Label layoutX="43.0" layoutY="160.0" text="Profesor 1" />
-        <ComboBox fx:id="cmbProfesor1" layoutX="120.0" layoutY="156.0" prefWidth="150.0" />
+        <Label layoutX="29.0" layoutY="193.0" text="Profesor 1" />
+        <ComboBox fx:id="cmbProfesor1" layoutX="121.0" layoutY="190.0" prefWidth="150.0" />
 
-        <Label layoutX="43.0" layoutY="192.0" text="Profesor 2" />
-        <ComboBox fx:id="cmbProfesor2" layoutX="120.0" layoutY="188.0" prefWidth="150.0" />
+        <Label layoutX="28.0" layoutY="226.0" text="Profesor 2" />
+        <ComboBox fx:id="cmbProfesor2" layoutX="120.0" layoutY="224.0" prefWidth="150.0" />
 
         <!-- Salón -->
-        <Label layoutX="54.0" layoutY="227.0" text="Salón" />
-        <ComboBox fx:id="cmbSalon" layoutX="120.0" layoutY="223.0" prefWidth="150.0" />
+        <Label layoutX="30.0" layoutY="262.0" text="Salón" />
+        <ComboBox fx:id="cmbSalon" layoutX="120.0" layoutY="258.0" prefWidth="150.0" />
 
         <!-- Semestre -->
-        <Label layoutX="43.0" layoutY="262.0" text="Semestre" />
-        <ComboBox fx:id="cmbSemestre" layoutX="120.0" layoutY="257.0" prefWidth="150.0" />
+        <Label layoutX="29.0" layoutY="297.0" text="Semestre" />
+        <ComboBox fx:id="cmbSemestre" layoutX="120.0" layoutY="293.0" prefWidth="150.0" />
 
         <!-- Botones -->
-        <Button fx:id="btnGuardar" layoutX="63.0" layoutY="296.0" onAction="#guardarClase" text="Guardar" />
-        <Button fx:id="btnActualizar" layoutX="156.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
-        <Button fx:id="btnEliminar" layoutX="420.0" layoutY="296.0" onAction="#pantallaEliminarClase" text="Eliminar" />
+        <Button fx:id="btnGuardar" layoutX="321.0" layoutY="296.0" onAction="#guardarClase" text="Guardar" />
+        <Button fx:id="btnActualizar" layoutX="416.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
+        <Button fx:id="btnEliminar" layoutX="523.0" layoutY="296.0" onAction="#pantallaEliminarClase" text="Eliminar" />
         <Button fx:id="btnVolver" layoutX="527.0" layoutY="14.0" onAction="#regresarMenu" text="Volver" />
 
         <!-- Tabla -->

@@ -1,7 +1,5 @@
 package co.edu.universe.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString(onlyExplicitlyIncluded = true)
 @Entity
-public class Usuario {
+public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +19,24 @@ public class Usuario {
     @ToString.Include
     private String nombre;
 
+    @ToString.Include
+    private String correo;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
-    private Rol rol;
+    private Carrera carrera;
+
+    @OneToOne(mappedBy = "estudiante")
+    @ToString.Exclude
+    private Usuario usuario;
 
     @OneToOne
-    @JoinColumn(name="estudiante_id")
+    @JoinColumn(name="requisito_ingles_id")
     @ToString.Exclude
-    private Estudiante estudiante;
-}
+    private RequisitoIngles requisitoIngles;
 
+    @OneToOne
+    @JoinColumn(name="horario_id")
+    @ToString.Exclude
+    private Horario horario;
+}

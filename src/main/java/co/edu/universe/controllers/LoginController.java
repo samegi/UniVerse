@@ -1,7 +1,9 @@
 package co.edu.universe.controllers;
 
 import co.edu.universe.App;
+import co.edu.universe.model.Estudiante;
 import co.edu.universe.model.Usuario;
+import co.edu.universe.service.EstudianteService;
 import co.edu.universe.service.UsuarioService;
 import co.edu.universe.utils.Paths;
 import co.edu.universe.utils.Sesion;
@@ -35,9 +37,7 @@ public class LoginController {
             lblError.setText("Ingrese un nombre de usuario.");
             return;
         }
-
         try {
-            // Buscar usuario
             Usuario usuario = usuarioService.login(nombre.trim());
 
             if (usuario == null) {
@@ -48,19 +48,24 @@ public class LoginController {
             // Guardar usuario en sesión
             Sesion.setUsuario(usuario);
 
-            // Obtener rol
-            String rol = usuario.getRol().getNombre();
+            String rol = usuario.getRol().getNombreRol();
 
-            // Navegación según rol
-            if (rol.equalsIgnoreCase("DirectorCarrera")) {
+            if (rol.equalsIgnoreCase("DIRECTOR_CARRERA")) {
                 App.setRoot(Paths.MENU_DIR_CARRERA);
-            } else {
-                //ELIMINAR DESPUES
-                lblError.setText("Tu rol no tiene una vista asignada.");
+            }
+            else if (rol.equalsIgnoreCase("ESTUDIANTE")) {
+                System.out.println("Usuario logueado: " + usuario.getNombre());
+                System.out.println("Estudiante asociado: " + usuario.getEstudiante());
+                App.setRoot(Paths.MENU_ESTUDIANTE);
             }
 
         } catch (Exception e) {
-            lblError.setText("Usuario no encontrado.");
+            lblError.setText("Error: " + e.getMessage());
         }
+
+    }
+    @FXML
+    public void onRegisterClick() {
+        App.setRoot(Paths.CREAR_ESTUDIANTE);
     }
 }

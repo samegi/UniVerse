@@ -4,6 +4,7 @@ import co.edu.universe.App;
 import co.edu.universe.model.*;
 import co.edu.universe.service.*;
 import co.edu.universe.utils.Paths;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,7 +44,7 @@ public class CrudClaseController {
     @FXML private Button btnVolver;
 
     @FXML private ComboBox<Asignatura> cmbAsignatura;
-    @FXML private ComboBox<String> cmbDia;
+    @FXML private ComboBox<DiaSemana> cmbDia;
     @FXML private ComboBox<Profesor> cmbProfesor1;
     @FXML private ComboBox<Profesor> cmbProfesor2;
     @FXML private ComboBox<Salon> cmbSalon;
@@ -97,9 +98,7 @@ public class CrudClaseController {
         cmbSalon.setItems(FXCollections.observableArrayList(salonService.listarSalones()));
         cmbSemestre.setItems(FXCollections.observableArrayList(semestreService.listarSemestre()));
 
-        cmbDia.setItems(FXCollections.observableArrayList(
-                "Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"
-        ));
+        cmbDia.setItems(FXCollections.observableArrayList(DiaSemana.values()));
     }
 
     // ====== Configurar tabla ======
@@ -111,8 +110,8 @@ public class CrudClaseController {
         );
 
         colDia.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(
-                        data.getValue().getDia()
+                new SimpleStringProperty(
+                        data.getValue().getDia().name()   // LUNES, MARTES, ...
                 )
         );
 
@@ -176,16 +175,7 @@ public class CrudClaseController {
     // ====== Eliminar clase ======
     @FXML
     void pantallaEliminarClase(ActionEvent event) {
-        Clase seleccionada = tblClases.getSelectionModel().getSelectedItem();
-
-        if (seleccionada == null) {
-            mostrarError("Debes seleccionar una clase.");
-            return;
-        }
-
-        claseService.eliminarClase(seleccionada.getId());
-        mostrarAlerta("Clase eliminada.");
-        cargarClases();
+        App.setRoot(Paths.ELIMINAR_CLASE);
     }
 
     // ====== Volver ======

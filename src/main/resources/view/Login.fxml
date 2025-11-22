@@ -28,10 +28,13 @@
         <!-- BOTÓN INGRESAR -->
         <Button layoutX="271.0" layoutY="211.0" mnemonicParsing="false"
                 onAction="#onLoginClick" text="Ingresar" />
+        <!-- BOTÓN REGISTRAR -->
+        <Button layoutX="269.0" layoutY="240.0" mnemonicParsing="false"
+                onAction="#onRegisterClick" text="Registrar" />
 
         <!-- LABEL DE ERROR -->
         <Label fx:id="lblError"
-               layoutX="226.0" layoutY="185.0"
+               layoutX="220.0" layoutY="185.0"
                textFill="red"
                style="-fx-font-weight: bold;" />
 

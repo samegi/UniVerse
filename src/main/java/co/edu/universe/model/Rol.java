@@ -1,16 +1,27 @@
 package co.edu.universe.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Data
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(onlyExplicitlyIncluded = true)
 @Entity
 public class Rol {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     private Long id;
-    private String Nombre;
+
+    @ToString.Include
+    private String nombreRol;
+
+    @OneToMany(mappedBy = "rol")
+    @ToString.Exclude
+    private List<Usuario> usuarios;
 }

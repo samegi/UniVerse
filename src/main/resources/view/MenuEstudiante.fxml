@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane prefWidth="700" prefHeight="500"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.universe.controllers.MenuEstudianteController">
+
+    <top>
+        <HBox style="-fx-background-color:#2d6cdf;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+
+            <Label fx:id="lblBienvenida"
+                   style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
+
+            <Button text="Inscribir Clases"
+                    onAction="#abrirInscribirClases"
+                    prefWidth="250"
+                    style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-font-size:16;" />
+
+            <Button text="Ver Mi Horario"
+                    onAction="#abrirHorario"
+                    prefWidth="250"
+                    style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-size:16;" />
+
+            <Button text="Cerrar Sesión"
+                    onAction="#cerrarSesion"
+                    prefWidth="250"
+                    style="-fx-background-color:#e53935; -fx-text-fill:white; -fx-font-size:16;" />
+
+        </VBox>
+    </center>
+
+</BorderPane>

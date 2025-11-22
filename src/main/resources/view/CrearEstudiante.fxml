@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane prefWidth="600" prefHeight="500"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.universe.controllers.CrearEstudianteController">
+
+    <children>
+
+        <VBox spacing="10" alignment="CENTER" layoutX="50" layoutY="20" prefWidth="500">
+
+            <Label text="Registrar Nuevo Estudiante" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtNombre" promptText="Nombre completo"/>
+            <TextField fx:id="txtCorreo" promptText="Correo institucional"/>
+
+            <ComboBox fx:id="comboCarrera" promptText="Seleccionar carrera" prefWidth="300"/>
+
+            <TextField fx:id="txtUsuario" promptText="Nombre de usuario"/>
+
+            <ComboBox fx:id="comboNivelIngles" promptText="Nivel de inglés (A1–C2)" prefWidth="300"/>
+
+            <TextField fx:id="txtExamen" promptText="Examen (TOEFL, IELTS, etc.)"/>
+
+            <Button text="Registrar Estudiante"
+                    onAction="#registrarEstudiante"
+                    style="-fx-background-color: #2b6cb0; -fx-text-fill: white; -fx-padding: 10 20;"/>
+
+            <Label fx:id="lblMensaje" text="" style="-fx-text-fill: red;"/>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>

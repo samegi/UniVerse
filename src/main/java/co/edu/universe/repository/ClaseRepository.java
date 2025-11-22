@@ -2,6 +2,7 @@ package co.edu.universe.repository;
 
 import co.edu.universe.model.Asignatura;
 import co.edu.universe.model.Clase;
+import co.edu.universe.model.DiaSemana;
 import co.edu.universe.model.Semestre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,21 +21,22 @@ public interface ClaseRepository extends JpaRepository<Clase, Long> {
     List<Clase> findByAsignatura(Asignatura asignatura);
     // Buscar todas las clases de una asignatura por AsignaturaId
     List<Clase> findByAsignaturaId(Long asignaturaId);
-
     @Query("""
-    SELECT CASE WHEN COUNT(c) > 0 THEN TRUE ELSE FALSE END
+    SELECT COUNT(c) > 0
     FROM Clase c
     WHERE c.salon.id = :salonId
       AND c.dia = :dia
-      AND c.id <> :claseId
       AND (
             (c.horaInicio < :horaFin AND c.horaFin > :horaInicio)
-          )
+      )
+      AND c.id <> :idClase
 """)
-    boolean existeChoqueDeHorario(Long salonId,
-                                  String dia,
-                                  LocalTime horaInicio,
-                                  LocalTime horaFin,
-                                  Long claseId);
+    boolean existeChoqueDeHorario(
+            Long salonId,
+            DiaSemana dia,
+            LocalTime horaInicio,
+            LocalTime horaFin,
+            Long idClase
+    );
 
 }

@@ -4,13 +4,13 @@ import co.edu.universe.model.*;
 import co.edu.universe.repository.AsignacionRepository;
 import co.edu.universe.repository.AsignaturaRepository;
 import co.edu.universe.repository.ClaseRepository;
+import co.edu.universe.repository.EstudianteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
+
 import java.time.Instant;
-import java.time.LocalTime;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ClaseService {
@@ -21,6 +21,7 @@ public class ClaseService {
     private final AsignaturaRepository repo;
     private final ClaseRepository repoClase;
     private final SalonService salonService;
+    private final EstudianteRepository repoEstudiante;
 
     public ClaseService(
             SemestreService semestreService,
@@ -28,7 +29,8 @@ public class ClaseService {
             AsignacionRepository repoAsignacion,
             AsignaturaRepository repo,
             ClaseRepository repoClase,
-            SalonService salonService
+            SalonService salonService,
+            EstudianteRepository repoEstudiante
     ) {
         this.semestreService = semestreService;
         this.asignacionService = asignacionService;
@@ -36,6 +38,7 @@ public class ClaseService {
         this.repo = repo;
         this.repoClase = repoClase;
         this.salonService = salonService;
+        this.repoEstudiante = repoEstudiante;
     }
 
     // ---------------------------------------------------------------
@@ -128,12 +131,70 @@ public class ClaseService {
 
         return claseActualizada;
     }
+    public Map<Clase, Integer> obtenerCantidadEstudiantesPorClase() {
+
+        List<Clase> clases = repoClase.findAll();
+        List<Estudiante> estudiantes = repoEstudiante.findAll();
+
+        Map<Clase, Integer> conteo = new HashMap<>();
+
+        for (Clase clase : clases) {
+            int count = 0;
+
+            for (Estudiante est : estudiantes) {
+                if (est.getHorario() != null && est.getHorario().getClases().contains(clase)) {
+                    count++;
+                }
+            }
+
+            conteo.put(clase, count);
+        }
+
+        return conteo;
+    }
+
+
 
     @Transactional
     public void eliminarClase(Long id) {
         Clase clase = repoClase.findById(id).orElseThrow(() -> new RuntimeException("Clase no encontrada"));
         repoClase.delete(clase);
     }
+
+    @Transactional
+    public List<String> eliminarClaseYRetirarEstudiantes(Long claseId) {
+
+        Clase clase = repoClase.findById(claseId)
+                .orElseThrow(() -> new IllegalArgumentException("Clase no encontrada."));
+
+        List<Estudiante> estudiantes = repoEstudiante.findAll();
+
+        List<String> reporte = new ArrayList<>();
+
+        for (Estudiante est : estudiantes) {
+
+            if (est.getHorario() == null) continue;
+
+            if (est.getHorario().getClases().remove(clase)) {
+
+                reporte.add(
+                        "Estudiante: " + est.getNombre() +
+                                " retirado de Asignatura: " + clase.getAsignatura().getNombre() +
+                                " | Clase #" + clase.getId()
+                );
+            }
+        }
+
+        // Guardar cambios en horarios
+        repoEstudiante.saveAll(estudiantes);
+
+        // Finalmente eliminar la clase
+        repoClase.delete(clase);
+
+        return reporte;
+    }
+
+
 
     // ---------------------------------------------------------------
     // CONSULTAS

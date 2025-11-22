@@ -18,12 +18,6 @@ public class SemestreService {
     @Autowired
     private SemestreRepository semestreRepository;
 
-    private void validarPermisoDirectorCarrera(Usuario usuario) {
-        if (!usuario.getRol().getNombre().equalsIgnoreCase("DirectorCarrera")) {
-            throw new SecurityException("No tienes permisos para gestionar semestres");
-        }
-    }
-
     // =====================
     //     CRUD BÁSICO
     // =====================
@@ -32,7 +26,6 @@ public class SemestreService {
      * Crear semestre
      */
     public Semestre crearSemestre(Semestre semestre, Usuario usuario) {
-        validarPermisoDirectorCarrera(Sesion.getUsuario());
         validarFechas(semestre);
         return semestreRepository.save(semestre);
     }
@@ -55,7 +48,6 @@ public class SemestreService {
      * Actualizar semestre
      */
     public Semestre actualizarSemestre(Long id, Semestre actualizado, Usuario usuario) {
-        validarPermisoDirectorCarrera(Sesion.getUsuario());
         Semestre existente = buscarSemestrePorId(id);
 
         existente.setNombre(actualizado.getNombre());
@@ -76,7 +68,6 @@ public class SemestreService {
      *
      */
     public void eliminarSemestre(Long id, Usuario usuario) {
-        validarPermisoDirectorCarrera(Sesion.getUsuario());
         Semestre semestre = buscarSemestrePorId(id);
         semestreRepository.delete(semestre);
     }
@@ -131,16 +122,6 @@ public class SemestreService {
     /**
      * Validación
      */
-    public boolean puedeRegistrarAsignaturas(Semestre semestre, Instant fechaActual) {
-        return fechaActual.isBefore(calcularFechaMaximaCreacionAsignaturas(semestre));
-    }
-
-    public boolean inscripcionesAbiertas(Semestre semestre, Instant fechaActual) {
-        Instant inicio = calcularFechaInicioInscripciones(semestre);
-        Instant fin = calcularFechaFinInscripciones(semestre);
-        return !fechaActual.isBefore(inicio) && !fechaActual.isAfter(fin);
-    }
-
     public List<Clase> obtenerClases(Long idSemestre) {
         Semestre semestre = buscarSemestrePorId(idSemestre);
         return semestre.getClases();
@@ -161,7 +142,6 @@ public class SemestreService {
                                 (idExcluir == null || !s.getId().equals(idExcluir))
                 );
     }
-
     public boolean existeFechaInicio(Instant fecha, Long idExcluir) {
         if (fecha == null) {
             return false;
@@ -173,7 +153,6 @@ public class SemestreService {
                                 (idExcluir == null || !s.getId().equals(idExcluir))
                 );
     }
-
     public boolean existeFechaFin(Instant fecha, Long idExcluir) {
         if (fecha == null) {
             return false;

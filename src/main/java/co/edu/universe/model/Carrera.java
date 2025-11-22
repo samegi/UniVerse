@@ -29,4 +29,9 @@ public class Carrera {
     /*@OneToMany(mappedBy = "carrera", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Estudiante> estudiantes = new ArrayList<>();*/
 
+    @Override
+    public String toString() {
+        return nombre;  // SOLO el campo simple
+    }
+
 }

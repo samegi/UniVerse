@@ -28,7 +28,6 @@ public class Semestre {
 
     @Override
     public String toString() {
-        return nombre;  // o nombre + " " + año + "-" + periodo
+        return nombre;
     }
-
 }

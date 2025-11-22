@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane prefWidth="900" prefHeight="600"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="co.edu.universe.controllers.VerHorarioController">
+
+    <top>
+        <HBox style="-fx-background-color:#2d6cdf;">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label text="Mi Horario"
+                   style="-fx-text-fill:white; -fx-font-size:22; -fx-font-weight:bold;" />
+        </HBox>
+    </top>
+
+    <center>
+        <GridPane fx:id="gridCalendario"
+                  hgap="5" vgap="5"
+                  style="-fx-background-color: #f5f5f5;">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <Button text="Volver al Menú"
+                    onAction="#volverMenu"
+                    style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-font-size:16;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -56,6 +56,6 @@ public class MenuDirCarreraController {
 
     @FXML
     void gestionarClase(ActionEvent event) {
-        /*TODO: implementar cuando tengas CrudClase.fxml*/
+        App.setRoot(Paths.CRUD_CLASE);
     }
 }

@@ -23,13 +23,14 @@ public class Clase {
     @ManyToOne
     private Asignatura asignatura;
 
-    @OneToMany(mappedBy = "clase", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "clase", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Asignacion> asignaciones = new ArrayList<>();
-    @ManyToOne
-    @JoinColumn(name = "salon_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "salon_id", nullable = false)
     private Salon salon;
+
     @Transient // no se guarda en BD
     private List<Profesor> profesoresTemporales = new ArrayList<>();
-
 }
 

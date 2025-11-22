@@ -43,10 +43,24 @@ SELECT 2, '2027-07-15T00:00:00Z', '2026-12-15T00:00:00Z', 'Segundo Semestre 2025
     WHERE NOT EXISTS (SELECT 1 FROM semestre WHERE id = 2);
 
 -- === Profesores ===
--- INSERT INTO profesor (nombre, correo, tipo_profesor, min_horas, max_horas, valor_hora, pago_extra_por_hora, empresa, categoria, departamento_id)
--- SELECT 'Laura Martínez', 'laura.martinez@universidad.edu.co', 'CATEDRA', 0, 0, 0, 0, 'Tech Solutions S.A.','B', 1
---    WHERE NOT EXISTS (SELECT 1 FROM profesor WHERE correo = 'laura.martinez@universidad.edu.co');
+INSERT INTO profesor (nombre, correo, tipo_profesor, min_horas, max_horas, valor_hora, pago_extra_por_hora, empresa, categoria, departamento_id)
+SELECT 'Laura Martínez', 'laura.martinez@universidad.edu.co', 'CATEDRA', 0, 0, 0, 0, 'Tech Solutions S.A.','B', 1
+    WHERE NOT EXISTS (SELECT 1 FROM profesor WHERE correo = 'laura.martinez@universidad.edu.co');
 
--- INSERT INTO profesor (nombre, correo, tipo_profesor, min_horas, max_horas, valor_hora, pago_extra_por_hora, empresa, categoria, departamento_id)
--- SELECT 'Edgar Munoz', 'edgar@universidad.edu.co', 'PLANTA', 10, 15, 20000, 50000, 'Puentes Edgar',null, 1
---    WHERE NOT EXISTS (SELECT 1 FROM profesor WHERE correo = 'edgar@universidad.edu.co');
+INSERT INTO profesor (nombre, correo, tipo_profesor, min_horas, max_horas, valor_hora, pago_extra_por_hora, empresa, categoria, departamento_id)
+SELECT 'Edgar Munoz', 'edgar@universidad.edu.co', 'PLANTA', 10, 15, 20000, 50000, 'Puentes Edgar',null, 1
+    WHERE NOT EXISTS (SELECT 1 FROM profesor WHERE correo = 'edgar@universidad.edu.co');
+
+-- === Salon ===
+INSERT INTO salon (id, nombre, cupo_max)
+SELECT 1, 'Salón A', 25
+    WHERE NOT EXISTS (SELECT 1 FROM salon WHERE id = 1);
+
+INSERT INTO salon (id, nombre, cupo_max)
+SELECT 2, 'Salón B', 30
+    WHERE NOT EXISTS (SELECT 1 FROM salon WHERE id = 2);
+
+INSERT INTO salon (id, nombre, cupo_max)
+SELECT 3, 'Salón C', 40
+    WHERE NOT EXISTS (SELECT 1 FROM salon WHERE id = 3);
+

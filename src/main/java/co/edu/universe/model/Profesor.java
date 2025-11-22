@@ -33,4 +33,9 @@ public class Profesor {
     @ManyToOne
     private Departamento departamento;
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

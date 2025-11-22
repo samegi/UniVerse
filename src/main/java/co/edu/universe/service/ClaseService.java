@@ -1,9 +1,6 @@
 package co.edu.universe.service;
 
-import co.edu.universe.model.Asignacion;
-import co.edu.universe.model.Clase;
-import co.edu.universe.model.Profesor;
-import co.edu.universe.model.Semestre;
+import co.edu.universe.model.*;
 import co.edu.universe.repository.AsignacionRepository;
 import co.edu.universe.repository.AsignaturaRepository;
 import co.edu.universe.repository.ClaseRepository;

@@ -26,4 +26,9 @@ public class Asignatura {
     @ManyToOne
     private Carrera carrera;
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

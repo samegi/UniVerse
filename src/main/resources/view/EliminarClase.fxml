@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefWidth="700" prefHeight="500"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="co.edu.universe.controllers.EliminarClaseController">
+<AnchorPane prefHeight="384.0" prefWidth="700" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.EliminarClaseController">
 
     <children>
+        <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/EliminarClase.jpg" />
+            </image>
+        </ImageView>
 
-        <Label text="Eliminar Clase" layoutX="20" layoutY="20"
-               style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        <Label layoutX="20.0" layoutY="292.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Eliminar Clase" />
 
-        <BarChart fx:id="graficoClases"
-                  layoutX="20" layoutY="60"
-                  prefWidth="660" prefHeight="250">
+        <BarChart fx:id="graficoClases" layoutX="20.0" layoutY="56.0" prefHeight="250" prefWidth="660">
             <xAxis>
-                <CategoryAxis label="Clase"/>
+                <CategoryAxis label="Clase" prefHeight="42.0" prefWidth="582.0" />
             </xAxis>
             <yAxis>
-                <NumberAxis label="Estudiantes"/>
+                <NumberAxis label="Estudiantes" />
             </yAxis>
         </BarChart>
 
-        <Label text="Seleccione la clase a eliminar:"
-               layoutX="20" layoutY="330"/>
+        <Label layoutX="20.0" layoutY="342.0" text="Seleccione la clase a eliminar:" />
 
-        <ComboBox fx:id="comboClases"
-                  layoutX="220" layoutY="325"
-                  prefWidth="300"/>
-
-        <Button text="Eliminar Clase"
-                layoutX="540" layoutY="325"
-                onAction="#onEliminarClick"
-                style="-fx-background-color: #c62828; -fx-text-fill: white;"/>
+        <ComboBox fx:id="comboClases" layoutX="200.0" layoutY="338.0" prefWidth="300" />
+      <Button layoutX="569.0" layoutY="338.0" mnemonicParsing="false" onAction="#onEliminarClick" text="Eliminar Clase" />
+      <Button layoutX="621.0" layoutY="14.0" mnemonicParsing="false" onAction="#volverCrudClase" prefHeight="25.0" prefWidth="65.0" text="Volver" />
 
     </children>
 
 </AnchorPane>
-

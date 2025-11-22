@@ -61,8 +61,6 @@ public class MenuEstudianteController {
         }
     }
 
-
-
     // ============================
     // ABRIR PANTALLA HORARIO (solo visual)
     // ============================

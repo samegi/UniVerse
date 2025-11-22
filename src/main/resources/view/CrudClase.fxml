@@ -20,22 +20,22 @@
         </ImageView>
 
         <!-- Asignatura -->
-        <Label layoutX="40" layoutY="80" text="Asignatura" />
-        <ComboBox fx:id="cmbAsignatura" layoutX="120.0" layoutY="76.0" prefWidth="150.0" />
+        <Label layoutX="40.0" layoutY="76.0" text="Asignatura" />
+        <ComboBox fx:id="cmbAsignatura" layoutX="120.0" layoutY="72.0" prefWidth="150.0" />
 
         <!-- Día -->
-        <Label layoutX="45.0" layoutY="132.0" text="Día" />
-        <ComboBox fx:id="cmbDia" layoutX="26.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
+        <Label layoutX="47.0" layoutY="107.0" text="Día" />
+        <ComboBox fx:id="cmbDia" layoutX="120.0" layoutY="103.0" prefHeight="25.0" prefWidth="150.0" />
 
         <!-- Hora Inicio -->
-        <Label layoutX="112.0" layoutY="132.0" text="Hora Inicio" />
-        <Spinner fx:id="spnHoraInicio" layoutX="93.0" layoutY="149.0" prefHeight="25.0" prefWidth="45.0" />
-        <Spinner fx:id="spnMinutoInicio" layoutX="243.0" layoutY="149.0" prefHeight="25.0" prefWidth="50.0" />
+        <Label layoutX="68.0" layoutY="132.0" text="Hora Inicio" />
+        <Spinner fx:id="spnHoraInicio" layoutX="31.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
+        <Spinner fx:id="spnMinutoInicio" layoutX="232.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
 
         <!-- Hora Fin -->
-        <Label layoutX="221.0" layoutY="132.0" text="Hora Fin" />
-        <Spinner fx:id="spnHoraFin" layoutX="196.0" layoutY="149.0" prefHeight="25.0" prefWidth="45.0" />
-        <Spinner fx:id="spnMinutoFin" layoutX="140.0" layoutY="149.0" prefHeight="25.0" prefWidth="50.0" />
+        <Label layoutX="203.0" layoutY="132.0" text="Hora Fin" />
+        <Spinner fx:id="spnHoraFin" layoutX="166.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
+        <Spinner fx:id="spnMinutoFin" layoutX="97.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
 
         <!-- Profesores -->
         <Label layoutX="29.0" layoutY="193.0" text="Profesor 1" />
@@ -61,9 +61,9 @@
         <!-- Tabla -->
         <TableView fx:id="tblClases" layoutX="309.0" layoutY="52.0" prefHeight="218.0" prefWidth="281.0">
             <columns>
-                <TableColumn fx:id="colAsignatura" prefWidth="93.0" text="Asignatura" />
-                <TableColumn fx:id="colDia" prefWidth="56.5" text="Día" />
-                <TableColumn fx:id="colHoraInicio" prefWidth="62.5" text="Inicio" />
+                <TableColumn fx:id="colAsignatura" prefWidth="81.0" text="Asignatura" />
+                <TableColumn fx:id="colDia" prefWidth="63.0" text="Día" />
+                <TableColumn fx:id="colHoraInicio" prefWidth="68.0" text="Inicio" />
                 <TableColumn fx:id="colHoraFin" prefWidth="67.0" text="Fin" />
             </columns>
         </TableView>

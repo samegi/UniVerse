@@ -1,7 +1,10 @@
 package co.edu.universe.controllers;
 
+import co.edu.universe.App;
 import co.edu.universe.model.Clase;
 import co.edu.universe.service.ClaseService;
+import co.edu.universe.utils.Paths;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -65,6 +68,9 @@ public class EliminarClaseController {
 
         cargarGrafico();
         cargarClases();
+    }
+    public void volverCrudClase(ActionEvent event){
+        App.setRoot(Paths.CRUD_CLASE);
     }
 
     private void mostrar(String msg) {

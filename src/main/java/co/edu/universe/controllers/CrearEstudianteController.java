@@ -1,9 +1,12 @@
 package co.edu.universe.controllers;
 
+import co.edu.universe.App;
 import co.edu.universe.model.Nivel;
 import co.edu.universe.model.Carrera;
 import co.edu.universe.service.EstudianteService;
 import co.edu.universe.repository.CarreraRepository;
+import co.edu.universe.utils.Paths;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +75,10 @@ public class CrearEstudianteController {
             lblMensaje.setStyle("-fx-text-fill: red;");
             lblMensaje.setText("Error: " + e.getMessage());
         }
+    }
+
+    public void iniciarSesion(ActionEvent event){
+        App.setRoot(Paths.LOGIN);
     }
 
     private void limpiarCampos() {

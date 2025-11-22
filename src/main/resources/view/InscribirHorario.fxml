@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.universe.controllers.InscribirHorarioController"
-            prefWidth="1000" prefHeight="600">
+<BorderPane prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.InscribirHorarioController">
 
     <!-- Panel izquierdo -->
     <left>
-        <VBox spacing="10" prefWidth="350">
+        <VBox prefHeight="600.0" prefWidth="482.0" spacing="10">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
+                <Insets bottom="15" left="15" right="15" top="15" />
             </padding>
 
-            <Label text="Inscribir Clase" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Inscribir Clase" />
 
             <ComboBox fx:id="comboAsignatura" promptText="Seleccionar Asignatura" />
 
-            <TableView fx:id="tablaClases" prefHeight="350">
+            <TableView fx:id="tablaClases" prefHeight="350.0" prefWidth="452.0">
                 <columns>
-                    <TableColumn fx:id="colProfesor" text="Profesor" prefWidth="150"/>
-                    <TableColumn fx:id="colDia" text="Día" prefWidth="80"/>
-                    <TableColumn fx:id="colInicio" text="Inicio" prefWidth="60"/>
-                    <TableColumn fx:id="colFin" text="Fin" prefWidth="60"/>
+                    <TableColumn fx:id="colProfesor" prefWidth="150" text="Profesor" />
+                    <TableColumn fx:id="colDia" prefWidth="80" text="Día" />
+                    <TableColumn fx:id="colInicio" prefWidth="79.0" text="Inicio" />
+                    <TableColumn fx:id="colFin" prefWidth="85.5" text="Fin" />
                 </columns>
             </TableView>
 
-            <Button text="Agregar al horario"
-                    onAction="#agregarClase"
-                    style="-fx-background-color: #2d6cdf; -fx-text-fill: white;" />
+            <Button onAction="#agregarClase" style="-fx-background-color: #2d6cdf; -fx-text-fill: white;" text="Agregar al horario" />
 
-            <Label fx:id="lblMensaje" text="" style="-fx-font-size: 14;"/>
+            <Label fx:id="lblMensaje" style="-fx-font-size: 14;" text="" />
 
         </VBox>
     </left>
 
     <!-- Panel derecho: calendario semanal -->
     <center>
-        <GridPane fx:id="gridCalendario"
-                  hgap="5" vgap="5"
-                  style="-fx-background-color: #f5f5f5;">
+        <GridPane fx:id="gridCalendario" hgap="5" prefHeight="600.0" prefWidth="573.0" style="-fx-background-color: #f5f5f5;" vgap="5">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
+                <Insets bottom="15" left="15" right="15" top="15" />
             </padding>
         </GridPane>
     </center>

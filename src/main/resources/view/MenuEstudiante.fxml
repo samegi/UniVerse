@@ -1,47 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefWidth="700" prefHeight="500"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="co.edu.universe.controllers.MenuEstudianteController">
-
-    <top>
-        <HBox style="-fx-background-color:#2d6cdf;">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
-
-            <Label fx:id="lblBienvenida"
-                   style="-fx-text-fill:white; -fx-font-size:20; -fx-font-weight:bold;" />
-        </HBox>
-    </top>
-
-    <center>
-        <VBox spacing="20" alignment="CENTER">
-            <padding>
-                <Insets top="40" right="40" bottom="40" left="40"/>
-            </padding>
-
-            <Button text="Inscribir Clases"
-                    onAction="#abrirInscribirClases"
-                    prefWidth="250"
-                    style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-font-size:16;" />
-
-            <Button text="Ver Mi Horario"
-                    onAction="#abrirHorario"
-                    prefWidth="250"
-                    style="-fx-background-color:#2196F3; -fx-text-fill:white; -fx-font-size:16;" />
-
-            <Button text="Cerrar Sesión"
-                    onAction="#cerrarSesion"
-                    prefWidth="250"
-                    style="-fx-background-color:#e53935; -fx-text-fill:white; -fx-font-size:16;" />
-
-        </VBox>
-    </center>
-
-</BorderPane>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="336.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.MenuEstudianteController">
+<children>
+      <ImageView fitHeight="375.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/MenuEstudiante.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="196.0" layoutY="228.0" mnemonicParsing="false" onAction="#abrirInscribirClases" text="Inscribir" />
+      <Button layoutX="363.0" layoutY="228.0" mnemonicParsing="false" onAction="#abrirHorario" text="Ver" />
+      <Button layoutX="257.0" layoutY="290.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
+      <Label fx:id="lblBienvenida" layoutX="205.0" layoutY="68.0" prefHeight="17.0" prefWidth="192.0" />
+   </children>
+</AnchorPane>

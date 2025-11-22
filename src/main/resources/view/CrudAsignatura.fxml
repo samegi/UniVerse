@@ -51,7 +51,7 @@
         <Button layoutX="183.0" layoutY="231.0" mnemonicParsing="false" onAction="#guardarAsignatura" prefHeight="25.0" prefWidth="68.0" text="Guardar" />
 
         <Button layoutX="183.0" layoutY="262.0" mnemonicParsing="false" onAction="#actualizarAsignatura" text="Actualizar" />
-        <Button text="Cargar JSON" layoutX="450" layoutY="40" onAction="#onCargarJsonClick"/>
+        <Button layoutX="90.0" layoutY="231.0" onAction="#onCargarJsonClick" text="Cargar JSON" />
 
         <TableView fx:id="tblAsignaturas" layoutX="324.0" layoutY="69.0" prefHeight="200.0" prefWidth="226.0">
 

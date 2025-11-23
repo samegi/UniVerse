@@ -117,6 +117,21 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<mainClass>co.edu.universe.App</mainClass>
+					<options>
+						<option>--module-path</option>
+						<option>${project.basedir}/javafx-sdk-21.0.9/lib</option>
+						<option>--add-modules</option>
+						<option>javafx.controls,javafx.fxml</option>
+						<option>-Djava.awt.headless=false</option>
+					</options>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

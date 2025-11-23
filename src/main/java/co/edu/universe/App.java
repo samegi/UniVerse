@@ -56,4 +56,9 @@ public class App extends Application {
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
+
+    // Punto de entrada para ejecutar JavaFX directamente
+    public static void main(String[] args) {
+        Application.launch(App.class, args);
+    }
 }

@@ -9,7 +9,12 @@ public class SpringContext {
     private static ConfigurableApplicationContext context;
 
     static {
-        context = new SpringApplicationBuilder(UniverseApplication.class).run();
+        // Spring Boot sin servidor web cuando se ejecuta desde JavaFX
+        // Para acceder a H2 Console, ejecutar spring-boot:run por separado
+        context = new SpringApplicationBuilder(UniverseApplication.class)
+            .headless(false)
+            .web(org.springframework.boot.WebApplicationType.NONE)
+            .run();
     }
 
     public static ConfigurableApplicationContext getContext() {

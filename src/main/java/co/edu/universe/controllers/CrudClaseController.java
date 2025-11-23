@@ -4,14 +4,23 @@ import co.edu.universe.App;
 import co.edu.universe.model.*;
 import co.edu.universe.service.*;
 import co.edu.universe.utils.Paths;
+import co.edu.universe.utils.Sesion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
+import java.util.List;
 
 @Component
 public class CrudClaseController {
@@ -207,18 +216,36 @@ public class CrudClaseController {
         c.setSalon(cmbSalon.getValue());
         c.setSemestre(cmbSemestre.getValue());
         Salon s = cmbSalon.getValue();
-        System.out.println("============== DEBUG SALON ==============");
-        if (s == null) {
-            System.out.println("El salón seleccionado es NULL");
-        } else {
-            System.out.println("Salon seleccionado: " + s.getNombre());
-            System.out.println("ID: " + s.getId());
-            System.out.println("CupoMax: " + s.getCupoMax());
-        }
-        System.out.println("==========================================");
 
         return c;
     }
+    @FXML
+    private void onCargarJsonClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar archivo JSON");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Archivos JSON", "*.json")
+        );
+
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file == null) {
+            mostrarError("No se seleccionó ningún archivo.");
+            return;
+        }
+
+        try (InputStream input = new FileInputStream(file)) {
+
+            List<Clase> creadas = claseService.cargarClasesDesdeJson(input, Sesion.getUsuario());
+
+            // Si quieres refrescar la tabla
+            cargarClases();
+
+        } catch (Exception e) {
+            mostrarError("Error al cargar JSON: " + e.getMessage());
+        }
+    }
+
 
     // ====== Utilidades ======
     private void mostrarError(String msg) {

@@ -1,15 +1,17 @@
 package co.edu.universe.service;
 
 import co.edu.universe.model.*;
-import co.edu.universe.repository.AsignacionRepository;
-import co.edu.universe.repository.AsignaturaRepository;
-import co.edu.universe.repository.ClaseRepository;
-import co.edu.universe.repository.EstudianteRepository;
+import co.edu.universe.repository.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -22,6 +24,8 @@ public class ClaseService {
     private final ClaseRepository repoClase;
     private final SalonService salonService;
     private final EstudianteRepository repoEstudiante;
+    private final SalonRepository salonRepository;
+    private final ProfesorRepository repoProfesor;
 
     public ClaseService(
             SemestreService semestreService,
@@ -30,7 +34,9 @@ public class ClaseService {
             AsignaturaRepository repo,
             ClaseRepository repoClase,
             SalonService salonService,
-            EstudianteRepository repoEstudiante
+            EstudianteRepository repoEstudiante,
+            SalonRepository salonRepository,
+            ProfesorRepository  repoProfesor
     ) {
         this.semestreService = semestreService;
         this.asignacionService = asignacionService;
@@ -39,6 +45,8 @@ public class ClaseService {
         this.repoClase = repoClase;
         this.salonService = salonService;
         this.repoEstudiante = repoEstudiante;
+        this.salonRepository = salonRepository;
+        this.repoProfesor = repoProfesor;
     }
 
     // ---------------------------------------------------------------
@@ -109,6 +117,105 @@ public class ClaseService {
 
         return claseGuardada;
     }
+    @Transactional
+    public List<Clase> cargarClasesDesdeJson(InputStream jsonStream, Usuario usuario) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+
+            List<Map<String, Object>> clasesJson = mapper.readValue(
+                    jsonStream,
+                    new TypeReference<List<Map<String, Object>>>() {}
+            );
+
+            List<Clase> clasesCreadas = new ArrayList<>();
+
+            for (Map<String, Object> item : clasesJson) {
+                Clase clase = new Clase();
+
+                // -------------------------------
+                //       DIA DE LA SEMANA
+                // -------------------------------
+                if (!item.containsKey("dia")) {
+                    throw new IllegalArgumentException("Cada clase debe incluir 'dia'.");
+                }
+                clase.setDia(DiaSemana.valueOf(item.get("dia").toString()));
+
+                // -------------------------------
+                //      HORARIOS
+                // -------------------------------
+                clase.setHoraInicio(LocalTime.parse(item.get("horaInicio").toString()));
+                clase.setHoraFin(LocalTime.parse(item.get("horaFin").toString()));
+
+                // -------------------------------
+                //        SEMESTRE
+                // -------------------------------
+                if (!item.containsKey("semestreId")) {
+                    throw new IllegalArgumentException("Cada clase debe incluir 'semestreId'.");
+                }
+                Long semestreId = Long.valueOf(item.get("semestreId").toString());
+                Semestre semestre = semestreService.buscarSemestrePorId(semestreId);
+                clase.setSemestre(semestre);
+
+                // Validar fecha límite
+                validarCreacionDeClase(clase);
+
+                // -------------------------------
+                //       ASIGNATURA
+                // -------------------------------
+                if (!item.containsKey("asignaturaId")) {
+                    throw new IllegalArgumentException("Cada clase debe incluir 'asignaturaId'.");
+                }
+                Long asignaturaId = Long.valueOf(item.get("asignaturaId").toString());
+                Asignatura asignatura = repo.findById(asignaturaId)
+                        .orElseThrow(() -> new IllegalArgumentException("Asignatura no encontrada: " + asignaturaId));
+                clase.setAsignatura(asignatura);
+
+                // -------------------------------
+                //        SALON
+                // -------------------------------
+                if (!item.containsKey("salonId")) {
+                    throw new IllegalArgumentException("Cada clase debe incluir 'salonId'.");
+                }
+                Long salonId = Long.valueOf(item.get("salonId").toString());
+                Salon salon = salonRepository.findById(salonId)
+                        .orElseThrow(() -> new IllegalArgumentException("Salón no encontrado: " + salonId));
+                clase.setSalon(salon);
+
+                // -------------------------------
+                //      GUARDAR CLASE
+                // -------------------------------
+                Clase creada = repoClase.save(clase);
+                clasesCreadas.add(creada);
+
+                // -------------------------------
+                //      PROFESOR (Asignación)
+                // -------------------------------
+                if (!item.containsKey("profesorId"))
+                    throw new IllegalArgumentException("Cada clase debe incluir 'profesorId'.");
+
+                Long profesorId = Long.valueOf(item.get("profesorId").toString());
+                Profesor profesor = repoProfesor.findById(profesorId)
+                        .orElseThrow(() -> new IllegalArgumentException("Profesor no encontrado"));
+
+                Asignacion asignacion = new Asignacion();
+                asignacion.setClase(clase);
+                asignacion.setProfesor(profesor);
+
+                repoAsignacion.save(asignacion);
+
+                // Agregar lista a clase si la quieres reflejada en el objeto
+                clase.getAsignaciones().add(asignacion);
+
+                clasesCreadas.add(clase);
+            }
+
+            return clasesCreadas;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error leyendo JSON: " + e.getMessage(), e);
+        }
+    }
+
 
     @Transactional
     public Clase updateClase(Long id, Clase updatedClase) {
@@ -193,8 +300,6 @@ public class ClaseService {
 
         return reporte;
     }
-
-
 
     // ---------------------------------------------------------------
     // CONSULTAS

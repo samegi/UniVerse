@@ -53,13 +53,14 @@
         <ComboBox fx:id="cmbSemestre" layoutX="120.0" layoutY="293.0" prefWidth="150.0" />
 
         <!-- Botones -->
-        <Button fx:id="btnGuardar" layoutX="321.0" layoutY="296.0" onAction="#guardarClase" text="Guardar" />
+        <Button fx:id="btnGuardar" layoutX="309.0" layoutY="296.0" onAction="#guardarClase" prefHeight="25.0" prefWidth="84.0" text="Guardar" />
         <Button fx:id="btnActualizar" layoutX="416.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
         <Button fx:id="btnEliminar" layoutX="523.0" layoutY="296.0" onAction="#pantallaEliminarClase" text="Eliminar" />
         <Button fx:id="btnVolver" layoutX="527.0" layoutY="14.0" onAction="#regresarMenu" text="Volver" />
+        <Button layoutX="309.0" layoutY="267.0" onAction="#onCargarJsonClick" text="Cargar JSON" />
 
         <!-- Tabla -->
-        <TableView fx:id="tblClases" layoutX="309.0" layoutY="52.0" prefHeight="218.0" prefWidth="281.0">
+        <TableView fx:id="tblClases" layoutX="309.0" layoutY="52.0" prefHeight="194.0" prefWidth="281.0">
             <columns>
                 <TableColumn fx:id="colAsignatura" prefWidth="81.0" text="Asignatura" />
                 <TableColumn fx:id="colDia" prefWidth="63.0" text="Día" />

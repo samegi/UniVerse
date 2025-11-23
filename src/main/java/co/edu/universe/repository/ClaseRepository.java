@@ -10,9 +10,27 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ClaseRepository extends JpaRepository<Clase, Long> {
+
+    // Buscar clase por ID con todas sus relaciones cargadas
+    @Query("SELECT c FROM Clase c " +
+           "LEFT JOIN FETCH c.semestre " +
+           "LEFT JOIN FETCH c.salon " +
+           "LEFT JOIN FETCH c.asignatura " +
+           "WHERE c.id = :id")
+    Optional<Clase> findByIdWithRelations(Long id);
+
+    // Buscar todas las clases con todas sus relaciones cargadas
+    @Query("SELECT DISTINCT c FROM Clase c " +
+           "LEFT JOIN FETCH c.semestre " +
+           "LEFT JOIN FETCH c.salon " +
+           "LEFT JOIN FETCH c.asignatura " +
+           "LEFT JOIN FETCH c.asignaciones a " +
+           "LEFT JOIN FETCH a.profesor")
+    List<Clase> findAllWithRelations();
 
     // Buscar todas las clases de un semestre específico
     List<Clase> findBySemestre(Semestre semestre);

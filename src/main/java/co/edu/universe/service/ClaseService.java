@@ -330,12 +330,28 @@ public class ClaseService {
     // CONSULTAS
     // ---------------------------------------------------------------
 
+    @Transactional(readOnly = true)
     public Clase buscarClasePorId(Long id){
-        return repoClase.findById(id).orElseThrow(() -> new RuntimeException("Clase no encontrada"));
+        Clase clase = repoClase.findByIdWithRelations(id)
+                .orElseThrow(() -> new RuntimeException("Clase no encontrada"));
+        
+        // Forzar inicialización de asignaciones y profesores (aunque sean EAGER, 
+        // asegurarnos de que estén cargados dentro de la transacción)
+        if (clase.getAsignaciones() != null) {
+            clase.getAsignaciones().forEach(asignacion -> {
+                if (asignacion.getProfesor() != null) {
+                    // Acceder al profesor para forzar su carga
+                    asignacion.getProfesor().getNombre();
+                }
+            });
+        }
+        
+        return clase;
     }
 
+    @Transactional(readOnly = true)
     public List<Clase> listarClases() {
-        return repoClase.findAll();
+        return repoClase.findAllWithRelations();
     }
 
     public List<Clase> listarPorAsignatura(Long asignaturaId) {

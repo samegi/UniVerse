@@ -20,7 +20,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CrudClaseController {
@@ -78,6 +80,25 @@ public class CrudClaseController {
         configurarTabla();
         cargarClases();
         configurarSpinnersDeHora();
+        configurarSeleccionTabla();
+    }
+
+    // ====== Configurar selección de tabla ======
+    private void configurarSeleccionTabla() {
+        tblClases.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            if (newSel != null) {
+                // Recargar la clase desde el servicio para inicializar relaciones lazy
+                try {
+                    Clase claseCompleta = claseService.buscarClasePorId(newSel.getId());
+                    llenarFormularioDesdeClase(claseCompleta);
+                } catch (Exception e) {
+                    System.err.println("=== ERROR AL CARGAR CLASE ===");
+                    System.err.println("Mensaje: " + e.getMessage());
+                    e.printStackTrace();
+                    System.err.println("============================");
+                }
+            }
+        });
     }
 
     // ====== Configurar Spinners ======
@@ -251,7 +272,16 @@ public class CrudClaseController {
         c.setHoraFin(horaFin);
         c.setSalon(cmbSalon.getValue());
         c.setSemestre(cmbSemestre.getValue());
-        Salon s = cmbSalon.getValue();
+
+        // Configurar profesores desde los ComboBoxes
+        List<Profesor> profesoresTemporales = new ArrayList<>();
+        if (cmbProfesor1.getValue() != null) {
+            profesoresTemporales.add(cmbProfesor1.getValue());
+        }
+        if (cmbProfesor2.getValue() != null) {
+            profesoresTemporales.add(cmbProfesor2.getValue());
+        }
+        c.setProfesoresTemporales(profesoresTemporales);
 
         return c;
     }
@@ -325,5 +355,63 @@ public class CrudClaseController {
         spnHoraFin.getValueFactory().setValue(10);
         spnMinutoFin.getValueFactory().setValue(0);
         tblClases.getSelectionModel().clearSelection();
+    }
+
+    // ====== Llenar formulario desde clase seleccionada ======
+    private void llenarFormularioDesdeClase(Clase clase) {
+        // Asignatura
+        cmbAsignatura.setValue(clase.getAsignatura());
+        
+        // Día
+        cmbDia.setValue(clase.getDia());
+        
+        // Hora inicio
+        spnHoraInicio.getValueFactory().setValue(clase.getHoraInicio().getHour());
+        spnMinutoInicio.getValueFactory().setValue(clase.getHoraInicio().getMinute());
+        
+        // Hora fin
+        spnHoraFin.getValueFactory().setValue(clase.getHoraFin().getHour());
+        spnMinutoFin.getValueFactory().setValue(clase.getHoraFin().getMinute());
+        
+        // Salón
+        cmbSalon.setValue(clase.getSalon());
+        
+        // Semestre
+        cmbSemestre.setValue(clase.getSemestre());
+        
+        // Profesores (desde asignaciones)
+        System.out.println("=== DEBUG: Cargando profesores ===");
+        System.out.println("Clase ID: " + clase.getId());
+        System.out.println("Asignaciones: " + (clase.getAsignaciones() != null ? clase.getAsignaciones().size() : "null"));
+        
+        if (clase.getAsignaciones() != null && !clase.getAsignaciones().isEmpty()) {
+            List<Profesor> profesores = clase.getAsignaciones().stream()
+                    .filter(a -> a.getProfesor() != null)
+                    .map(Asignacion::getProfesor)
+                    .distinct()
+                    .collect(Collectors.toList());
+            
+            System.out.println("Profesores encontrados: " + profesores.size());
+            
+            if (!profesores.isEmpty()) {
+                cmbProfesor1.setValue(profesores.get(0));
+                System.out.println("Profesor 1: " + profesores.get(0).getNombre());
+                if (profesores.size() > 1) {
+                    cmbProfesor2.setValue(profesores.get(1));
+                    System.out.println("Profesor 2: " + profesores.get(1).getNombre());
+                } else {
+                    cmbProfesor2.setValue(null);
+                }
+            } else {
+                cmbProfesor1.setValue(null);
+                cmbProfesor2.setValue(null);
+                System.out.println("No se encontraron profesores válidos");
+            }
+        } else {
+            cmbProfesor1.setValue(null);
+            cmbProfesor2.setValue(null);
+            System.out.println("No hay asignaciones para esta clase");
+        }
+        System.out.println("================================");
     }
 }

@@ -52,7 +52,10 @@ public class AsignacionService {
 
         // Validar límite de cátedra
         if (profesor.getTipoProfesor() == TipoProfesor.CATEDRA) {
-            int horasActuales = profesor.getAsignaciones().stream()
+            // Usar el repositorio para obtener las asignaciones del profesor
+            // en lugar de acceder a la relación lazy
+            List<Asignacion> asignacionesProfesor = asignacionRepository.findByProfesor(profesor);
+            int horasActuales = asignacionesProfesor.stream()
                     .mapToInt(a -> calcularDuracionHoras(a.getClase()))
                     .sum();
             int horasNuevaClase = calcularDuracionHoras(clase);

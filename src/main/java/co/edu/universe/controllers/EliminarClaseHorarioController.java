@@ -45,13 +45,17 @@ public class EliminarClaseHorarioController {
     @FXML
     public void initialize() {
 
-        colAsignatura.setCellValueFactory(new PropertyValueFactory<>("asignaturaNombre"));
+        colAsignatura.setCellValueFactory(
+                cell -> new SimpleObjectProperty<>(cell.getValue().getAsignatura().getNombre())
+        );
         colProfesor.setCellValueFactory(new PropertyValueFactory<>("profesorNombre"));
         colDia.setCellValueFactory(new PropertyValueFactory<>("dia"));
         colInicio.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         colFin.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
         colSalon.setCellValueFactory(new PropertyValueFactory<>("salon"));
-        colCupo.setCellValueFactory(new PropertyValueFactory<>("cupoMax"));
+        colCupo.setCellValueFactory(
+                cell -> new SimpleObjectProperty<>(cell.getValue().getSalon().getCupoMax())
+        );
     }
 
     // -------------------------------------------------------------------

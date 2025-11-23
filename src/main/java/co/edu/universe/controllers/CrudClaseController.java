@@ -49,6 +49,7 @@ public class CrudClaseController {
     // ====== Componentes JavaFX ======
     @FXML private Button btnActualizar;
     @FXML private Button btnEliminar;
+    @FXML private Button btnEliminarGrupo;
     @FXML private Button btnGuardar;
     @FXML private Button btnVolver;
 
@@ -151,6 +152,11 @@ public class CrudClaseController {
             mostrarAlerta("Clase guardada exitosamente.");
             cargarClases();
         } catch (Exception e) {
+            // Imprimir error completo en consola
+            System.err.println("=== ERROR AL GUARDAR CLASE ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("==============================");
             mostrarError(e.getMessage());
         }
     }
@@ -177,13 +183,43 @@ public class CrudClaseController {
             cargarClases();
 
         } catch (Exception e) {
+            // Imprimir error completo en consola
+            System.err.println("=== ERROR AL ACTUALIZAR CLASE ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("=================================");
             mostrarError(e.getMessage());
         }
     }
 
-    // ====== Eliminar clase ======
+    // ====== Eliminar clase (solo la clase seleccionada) ======
     @FXML
-    void pantallaEliminarClase(ActionEvent event) {
+    void eliminarClase(ActionEvent event) {
+        Clase seleccionada = tblClases.getSelectionModel().getSelectedItem();
+
+        if (seleccionada == null) {
+            mostrarError("Debes seleccionar una clase para eliminar.");
+            return;
+        }
+
+        try {
+            claseService.eliminarClase(seleccionada.getId());
+            mostrarAlerta("Clase eliminada correctamente.");
+            cargarClases();
+            limpiarCampos();
+        } catch (Exception e) {
+            // Imprimir error completo en consola
+            System.err.println("=== ERROR AL ELIMINAR CLASE ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("===============================");
+            mostrarError("Error al eliminar clase: " + e.getMessage());
+        }
+    }
+
+    // ====== Eliminar grupo de clases (redirige a pantalla de eliminar) ======
+    @FXML
+    void eliminarGrupoClases(ActionEvent event) {
         App.setRoot(Paths.ELIMINAR_CLASE);
     }
 
@@ -275,5 +311,19 @@ public class CrudClaseController {
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
+    }
+
+    private void limpiarCampos() {
+        cmbAsignatura.setValue(null);
+        cmbDia.setValue(null);
+        cmbSalon.setValue(null);
+        cmbSemestre.setValue(null);
+        cmbProfesor1.setValue(null);
+        cmbProfesor2.setValue(null);
+        spnHoraInicio.getValueFactory().setValue(8);
+        spnMinutoInicio.getValueFactory().setValue(0);
+        spnHoraFin.getValueFactory().setValue(10);
+        spnMinutoFin.getValueFactory().setValue(0);
+        tblClases.getSelectionModel().clearSelection();
     }
 }

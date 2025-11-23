@@ -284,6 +284,12 @@ public class ClaseService {
     @Transactional
     public void eliminarClase(Long id) {
         Clase clase = repoClase.findById(id).orElseThrow(() -> new RuntimeException("Clase no encontrada"));
+        
+        // Primero eliminar todas las asignaciones relacionadas
+        List<Asignacion> asignaciones = repoAsignacion.findByClase(clase);
+        repoAsignacion.deleteAll(asignaciones);
+        
+        // Luego eliminar la clase
         repoClase.delete(clase);
     }
 

@@ -54,8 +54,9 @@
 
         <!-- Botones -->
         <Button fx:id="btnGuardar" layoutX="309.0" layoutY="296.0" onAction="#guardarClase" prefHeight="25.0" prefWidth="84.0" text="Guardar" />
+        <Button fx:id="btnEliminarGrupo" layoutX="309.0" layoutY="325.0" onAction="#eliminarGrupoClases" prefHeight="25.0" prefWidth="150.0" text="Eliminar Grupo de Clases" />
         <Button fx:id="btnActualizar" layoutX="416.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
-        <Button fx:id="btnEliminar" layoutX="523.0" layoutY="296.0" onAction="#pantallaEliminarClase" text="Eliminar" />
+        <Button fx:id="btnEliminar" layoutX="523.0" layoutY="296.0" onAction="#eliminarClase" text="Eliminar" />
         <Button fx:id="btnVolver" layoutX="527.0" layoutY="14.0" onAction="#regresarMenu" text="Volver" />
         <Button layoutX="309.0" layoutY="267.0" onAction="#onCargarJsonClick" text="Cargar JSON" />
 

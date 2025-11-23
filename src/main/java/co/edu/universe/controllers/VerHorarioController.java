@@ -7,6 +7,7 @@ import co.edu.universe.model.Estudiante;
 import co.edu.universe.service.EstudianteService;
 
 import co.edu.universe.utils.Paths;
+import co.edu.universe.utils.Sesion;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -33,6 +34,15 @@ public class VerHorarioController {
 
     private Estudiante estudiante;
 
+    @FXML
+    public void initialize() {
+        this.estudiante = Sesion.getUsuario().getEstudiante();  //
+        construirCalendario();
+
+        if (estudiante != null) {
+            cargarHorario();
+        }
+    }
 
     // ==================================
     // RECIBIR ID DEL ESTUDIANTE
@@ -48,28 +58,23 @@ public class VerHorarioController {
     // ==================================
     private void cargarHorario() {
 
-        construirCalendario();
-        Estudiante est = this.estudiante;
+        // REFRESCAR desde BD por si añadió clases reciéntemente
+        Estudiante est = estudianteService.obtenerEstudiante(this.estudiante.getId());
+
         List<Clase> clases = est.getHorario().getClases();
 
-        for (Clase clase : clases) {
+        System.out.println("Clases en horario = " + clases.size()); // Debug
 
-            int col = clase.getDia().ordinal() + 1;  // LUN=0 → Col=1
+        for (Clase clase : clases) {
+            int col = clase.getDia().ordinal() + 1;
             int row = clase.getHoraInicio().getHour() - 7;
 
             Label lbl = new Label(
                     clase.getAsignatura().getNombre() +
-                            "\n" +
-                            clase.getHoraInicio() + " - " + clase.getHoraFin()
+                            "\n" + clase.getHoraInicio() + " - " + clase.getHoraFin()
             );
 
-            lbl.setStyle(
-                    "-fx-background-color: #2d8f6f; " +
-                            "-fx-text-fill: white; " +
-                            "-fx-padding: 6; " +
-                            "-fx-font-size: 12; " +
-                            "-fx-border-color: #1f6c54;"
-            );
+            lbl.setStyle("-fx-background-color: #2d8f6f; -fx-text-fill: white; -fx-padding: 6;");
 
             StackPane contenedor = new StackPane(lbl);
             contenedor.setAlignment(Pos.CENTER);
@@ -77,8 +82,6 @@ public class VerHorarioController {
             gridCalendario.add(contenedor, col, row);
         }
     }
-
-
     // ==================================
     // CONSTRUIR GRID VACÍO
     // ==================================

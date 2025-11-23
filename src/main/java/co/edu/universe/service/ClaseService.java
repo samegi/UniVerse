@@ -27,6 +27,7 @@ public class ClaseService {
     private final EstudianteRepository repoEstudiante;
     private final SalonRepository salonRepository;
     private final ProfesorRepository repoProfesor;
+    private final HorarioRepository repoHorario;
 
     public ClaseService(
             SemestreService semestreService,
@@ -37,7 +38,8 @@ public class ClaseService {
             SalonService salonService,
             EstudianteRepository repoEstudiante,
             SalonRepository salonRepository,
-            ProfesorRepository  repoProfesor
+            ProfesorRepository repoProfesor,
+            HorarioRepository repoHorario
     ) {
         this.semestreService = semestreService;
         this.asignacionService = asignacionService;
@@ -48,6 +50,7 @@ public class ClaseService {
         this.repoEstudiante = repoEstudiante;
         this.salonRepository = salonRepository;
         this.repoProfesor = repoProfesor;
+        this.repoHorario = repoHorario;
     }
 
     // ---------------------------------------------------------------
@@ -282,27 +285,23 @@ public class ClaseService {
     }
     public Map<Clase, Integer> obtenerCantidadEstudiantesPorClase() {
 
-        List<Clase> clases = repoClase.findAll();
-        List<Estudiante> estudiantes = repoEstudiante.findAll();
+        Map<Clase, Integer> resultado = new HashMap<>();
 
-        Map<Clase, Integer> conteo = new HashMap<>();
+        List<Object[]> datos = repoEstudiante.countEstudiantesPorClase();
+        System.out.println("datos "+ datos);
 
-        for (Clase clase : clases) {
-            int count = 0;
+        for (Object[] fila : datos) {
+            Long claseId = (Long) fila[0];
+            Integer count = Math.toIntExact((Long) fila[1]);
 
-            for (Estudiante est : estudiantes) {
-                if (est.getHorario() != null && est.getHorario().getClases().contains(clase)) {
-                    count++;
-                }
+            Clase clase = repoClase.findById(claseId).orElse(null);
+            if (clase != null) {
+                resultado.put(clase, count);
             }
-
-            conteo.put(clase, count);
         }
 
-        return conteo;
+        return resultado;
     }
-
-
 
     @Transactional
     public void eliminarClase(Long id) {
@@ -322,28 +321,38 @@ public class ClaseService {
         Clase clase = repoClase.findById(claseId)
                 .orElseThrow(() -> new IllegalArgumentException("Clase no encontrada."));
 
-        List<Estudiante> estudiantes = repoEstudiante.findAll();
-
         List<String> reporte = new ArrayList<>();
 
-        for (Estudiante est : estudiantes) {
+        // 1) Encontrar TODOS los horarios que contienen la clase (no solo los de estudiantes)
+        List<Horario> horariosConClase = repoHorario.findByClases_Id(claseId);
 
-            if (est.getHorario() == null) continue;
+        for (Horario horario : horariosConClase) {
 
-            if (est.getHorario().getClases().remove(clase)) {
+            boolean removida = horario.getClases()
+                    .removeIf(c -> c.getId().equals(claseId));
 
-                reporte.add(
-                        "Estudiante: " + est.getNombre() +
-                                " retirado de Asignatura: " + clase.getAsignatura().getNombre() +
-                                " | Clase #" + clase.getId()
-                );
+            if (removida) {
+                // Si tu Horario tiene referencia a estudiante (opcional)
+                if (horario.getEstudiante() != null) {
+                    reporte.add("Estudiante: " + horario.getEstudiante().getNombre() +
+                            " retirado de Asignatura: " + clase.getAsignatura().getNombre() +
+                            " | Clase #" + clase.getId());
+                }
+
+                repoHorario.save(horario);  // importante: dueño del ManyToMany
             }
         }
 
-        // Guardar cambios en horarios
-        repoEstudiante.saveAll(estudiantes);
+        repoHorario.flush(); // asegura que el join table se actualice antes de borrar
 
-        // Finalmente eliminar la clase
+        // 2) Borrar asignaciones de profesores (igual que en eliminarClase)
+        List<Asignacion> asignaciones = repoAsignacion.findByClase(clase);
+        repoAsignacion.deleteAll(asignaciones);
+
+        // 3) Limpiar lado inverso (por consistencia)
+        clase.getHorarios().clear();
+
+        // 4) Ahora sí eliminar la clase
         repoClase.delete(clase);
 
         return reporte;

@@ -10,4 +10,8 @@ public class Paths {
     public static final String CREAR_ESTUDIANTE = "/view/CrearEstudiante.fxml";
     public static final String MENU_ESTUDIANTE = "/view/MenuEstudiante.fxml";
     public static final String ELIMINAR_CLASE =  "/view/EliminarClase.fxml";
+    public static final String VER_HORARIO = "/view/VerHorario.fxml";
+    public static final String INSCRIBIR =  "/view/InscribirHorario.fxml";
+    public static final String ELIMINAR_CLASE_HORARIO = "/view/EliminarClaseHorario.fxml";
+
 }

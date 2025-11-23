@@ -13,8 +13,9 @@
             <Image url="@../images/MenuEstudiante.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="196.0" layoutY="228.0" mnemonicParsing="false" onAction="#abrirInscribirClases" text="Inscribir" />
+      <Button layoutX="170.0" layoutY="203.0" mnemonicParsing="false" onAction="#abrirInscribirClases" prefHeight="25.0" prefWidth="109.0" text="Inscribir Clase" />
       <Button layoutX="363.0" layoutY="228.0" mnemonicParsing="false" onAction="#abrirHorario" text="Ver" />
+    <Button layoutX="170.0" layoutY="234.0" onAction="#irAEliminarClase" prefHeight="25.0" prefWidth="109.0" text="Eliminar Clase" />
       <Button layoutX="257.0" layoutY="290.0" mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesion" />
       <Label fx:id="lblBienvenida" layoutX="205.0" layoutY="68.0" prefHeight="17.0" prefWidth="192.0" />
    </children>

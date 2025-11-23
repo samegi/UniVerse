@@ -1,4 +1,5 @@
 package co.edu.universe.controllers;
+
 import co.edu.universe.App;
 import co.edu.universe.model.Estudiante;
 import co.edu.universe.model.Usuario;
@@ -6,6 +7,7 @@ import co.edu.universe.service.EstudianteService;
 
 import co.edu.universe.utils.Paths;
 import co.edu.universe.utils.Sesion;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +28,7 @@ public class MenuEstudianteController {
 
     @FXML private Label lblBienvenida;
 
-    private Long estudianteId;
+    private Estudiante estudiante;
 
     @FXML
     public void initialize() {
@@ -34,24 +36,25 @@ public class MenuEstudianteController {
         Usuario usuario = Sesion.getUsuario();
 
         if (usuario != null && usuario.getEstudiante() != null) {
-            Estudiante est = usuario.getEstudiante();
-            lblBienvenida.setText("Bienvenido, " + est.getNombre());
+            this.estudiante = usuario.getEstudiante();
+            lblBienvenida.setText("Bienvenido, " + estudiante.getNombre());
         }
     }
 
     // ============================
-    // ABRIR PANTALLA INSCRIBIR CLASES
+    // ABRIR PANTALLA INSCRIBIR HORARIO
     // ============================
     @FXML
     public void abrirInscribirClases() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/InscribirHorario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.INSCRIBIR));
             loader.setControllerFactory(context::getBean);
 
             Parent root = loader.load();
 
+            // controlador correcto
             InscribirHorarioController controller = loader.getController();
-            controller.setEstudiante(Sesion.getUsuario().getEstudiante());
+            controller.setEstudiante(estudiante);
 
             Stage stage = (Stage) lblBienvenida.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -62,18 +65,19 @@ public class MenuEstudianteController {
     }
 
     // ============================
-    // ABRIR PANTALLA HORARIO (solo visual)
+    // ABRIR HORARIO (GRÁFICO)
     // ============================
     @FXML
     public void abrirHorario() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/VerHorario.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.VER_HORARIO));
             loader.setControllerFactory(context::getBean);
 
             Parent root = loader.load();
 
+            // controlador correcto
             VerHorarioController controller = loader.getController();
-            controller.setEstudiante(Sesion.getUsuario().getEstudiante());
+            controller.setEstudiante(estudiante);
 
             Stage stage = (Stage) lblBienvenida.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -83,14 +87,34 @@ public class MenuEstudianteController {
         }
     }
 
+    // ============================
+    // ABRIR ELIMINAR CLASE DEL HORARIO
+    // ============================
+    @FXML
+    void irAEliminarClase(ActionEvent event) {
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.ELIMINAR_CLASE_HORARIO));
+            loader.setControllerFactory(context::getBean);
+            Parent root = loader.load();
+
+            EliminarClaseHorarioController controller = loader.getController();
+            controller.setEstudiante(Sesion.getUsuario().getEstudiante());
+
+            Stage stage = (Stage) lblBienvenida.getScene().getWindow();
+            stage.setScene(new Scene(root));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // ============================
     // CERRAR SESIÓN
     // ============================
     @FXML
     public void cerrarSesion() {
-        Sesion.setUsuario(null);                 // Limpia usuario logueado
+        Sesion.setUsuario(null);
         App.setRoot(Paths.LOGIN);
     }
 }
-

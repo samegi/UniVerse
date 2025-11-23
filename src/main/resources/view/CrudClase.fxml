@@ -36,39 +36,28 @@
         <Label layoutX="203.0" layoutY="132.0" text="Hora Fin" />
         <Spinner fx:id="spnHoraFin" layoutX="166.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
         <Spinner fx:id="spnMinutoFin" layoutX="97.0" layoutY="149.0" prefHeight="25.0" prefWidth="59.0" />
-
-        <!-- Profesores -->
-        <Label layoutX="29.0" layoutY="193.0" text="Profesor 1" />
-        <ComboBox fx:id="cmbProfesor1" layoutX="121.0" layoutY="190.0" prefWidth="150.0" />
-
-        <Label layoutX="28.0" layoutY="226.0" text="Profesor 2" />
-        <ComboBox fx:id="cmbProfesor2" layoutX="120.0" layoutY="224.0" prefWidth="150.0" />
-
-        <!-- Salón -->
-        <Label layoutX="30.0" layoutY="262.0" text="Salón" />
-        <ComboBox fx:id="cmbSalon" layoutX="120.0" layoutY="258.0" prefWidth="150.0" />
-
-        <!-- Semestre -->
-        <Label layoutX="29.0" layoutY="297.0" text="Semestre" />
-        <ComboBox fx:id="cmbSemestre" layoutX="120.0" layoutY="293.0" prefWidth="150.0" />
+        <ComboBox fx:id="cmbProfesor1" layoutX="31.0" layoutY="189.0" prefHeight="25.0" prefWidth="119.0" promptText="Profesor 1" />
+        <ComboBox fx:id="cmbProfesor2" layoutX="166.0" layoutY="189.0" prefHeight="25.0" prefWidth="119.0" promptText="Profesor 2" />
+        <ComboBox fx:id="cmbSalon" layoutX="31.0" layoutY="225.0" prefHeight="25.0" prefWidth="119.0" promptText="Salon" />
+        <ComboBox fx:id="cmbSemestre" layoutX="166.0" layoutY="225.0" prefHeight="25.0" prefWidth="119.0" promptText="Semestre" />
 
         <!-- Botones -->
-        <Button fx:id="btnGuardar" layoutX="309.0" layoutY="296.0" onAction="#guardarClase" prefHeight="25.0" prefWidth="84.0" text="Guardar" />
-        <Button fx:id="btnEliminarGrupo" layoutX="309.0" layoutY="325.0" onAction="#eliminarGrupoClases" prefHeight="25.0" prefWidth="150.0" text="Eliminar Grupo de Clases" />
-        <Button fx:id="btnActualizar" layoutX="416.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
-        <Button fx:id="btnEliminar" layoutX="523.0" layoutY="296.0" onAction="#eliminarClase" text="Eliminar" />
+        <Button fx:id="btnGuardar" layoutX="114.0" layoutY="296.0" onAction="#guardarClase" prefHeight="25.0" prefWidth="84.0" text="Guardar" />
+        <Button fx:id="btnEliminarGrupo" layoutX="517.0" layoutY="295.0" onAction="#eliminarGrupoClases" prefHeight="25.0" prefWidth="68.0" text="Eliminar" />
+        <Button fx:id="btnActualizar" layoutX="309.0" layoutY="296.0" onAction="#actualizarClase" text="Actualizar" />
         <Button fx:id="btnVolver" layoutX="527.0" layoutY="14.0" onAction="#regresarMenu" text="Volver" />
-        <Button layoutX="309.0" layoutY="267.0" onAction="#onCargarJsonClick" text="Cargar JSON" />
+        <Button layoutX="408.0" layoutY="296.0" onAction="#onCargarJsonClick" text="Cargar JSON" />
 
         <!-- Tabla -->
         <TableView fx:id="tblClases" layoutX="309.0" layoutY="52.0" prefHeight="194.0" prefWidth="281.0">
             <columns>
-                <TableColumn fx:id="colAsignatura" prefWidth="81.0" text="Asignatura" />
-                <TableColumn fx:id="colDia" prefWidth="63.0" text="Día" />
-                <TableColumn fx:id="colHoraInicio" prefWidth="68.0" text="Inicio" />
-                <TableColumn fx:id="colHoraFin" prefWidth="67.0" text="Fin" />
+                <TableColumn fx:id="colAsignatura" prefWidth="92.0" text="Asignatura" />
+                <TableColumn fx:id="colDia" prefWidth="62.0" text="Día" />
+                <TableColumn fx:id="colHoraInicio" prefWidth="66.0" text="Inicio" />
+                <TableColumn fx:id="colHoraFin" prefWidth="59.0" text="Fin" />
             </columns>
         </TableView>
+      <Button fx:id="btnLimpiar" layoutX="114.0" layoutY="263.0" onAction="#limpiarCampos" prefHeight="25.0" prefWidth="84.0" text="Limpiar" />
 
     </children>
 </AnchorPane>

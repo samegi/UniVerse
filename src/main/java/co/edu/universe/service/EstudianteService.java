@@ -61,7 +61,7 @@ public class EstudianteService {
         return estudiante;
     }
     public Estudiante obtenerEstudiante(Long id) {
-        return estudianteRepository.findById(id)
+        return estudianteRepository.obtenerEstudianteCompleto(id)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
 

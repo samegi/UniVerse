@@ -39,15 +39,13 @@ public class Clase {
     @OneToMany(mappedBy = "clase", fetch = FetchType.EAGER)
     private List<Asignacion> asignaciones = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salon_id", nullable = false)
-    @ToString.Exclude
     private Salon salon;
 
     @Transient
     private List<Profesor> profesoresTemporales = new ArrayList<>();
 
-    // *** RELACIÓN INVERSA DEL HORARIO ***
     @ManyToMany(mappedBy = "clases")
     @ToString.Exclude
     private List<Horario> horarios = new ArrayList<>();

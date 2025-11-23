@@ -1,16 +1,18 @@
 package co.edu.universe.controllers;
 
+import co.edu.universe.App;
 import co.edu.universe.model.*;
 import co.edu.universe.repository.AsignaturaRepository;
 import co.edu.universe.repository.ClaseRepository;
 import co.edu.universe.service.EstudianteService;
 import co.edu.universe.service.HorarioService;
+import co.edu.universe.utils.Paths;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,15 +37,12 @@ public class InscribirHorarioController {
     @FXML private TableColumn<Clase, DiaSemana> colDia;
     @FXML private TableColumn<Clase, LocalTime> colInicio;
     @FXML private TableColumn<Clase, LocalTime> colFin;
+    @FXML private TableColumn<Clase, Integer> colCreditos;
 
+    @FXML private ProgressBar barraCreditos;
+    @FXML private Label lblCreditos;
     @FXML private Label lblMensaje;
 
-    @FXML private GridPane gridCalendario;
-
-
-    // ============================
-    // INITIALIZE
-    // ============================
     @FXML
     public void initialize() {
 
@@ -53,22 +52,28 @@ public class InscribirHorarioController {
         colInicio.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         colFin.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
 
-        // Cargar asignaturas
-        comboAsignatura.getItems().addAll(asignaturaRepository.findAll());
+        colCreditos.setCellValueFactory(cell ->
+                new SimpleObjectProperty<>(cell.getValue().getAsignatura().getCreditos())
+        );
 
+        comboAsignatura.getItems().addAll(asignaturaRepository.findAll());
         comboAsignatura.setOnAction(e -> cargarClases());
 
-        construirCalendario();
+        // ⚠ NO LLAMAR actualizarBarraCreditos() aquí
+        // porque el estudiante todavía no existe
     }
+
     // ============================
-    // Settear estudiante desde login
+    // RECIBIR ESTUDIANTE
     // ============================
-    public void setEstudiante(Estudiante est) {
-        this.estudiante = est;
-        actualizarCalendario();
+    public void setEstudiante(Estudiante estudiante) {
+        // Buscar versión actualizada del estudiante
+        this.estudiante = estudianteService.obtenerEstudiante(estudiante.getId());
+        actualizarBarraCreditos();
     }
+
     // ============================
-    // CARGAR CLASES
+    // CARGAR CLASES SEGÚN ASIGNATURA
     // ============================
     private void cargarClases() {
         Asignatura asignatura = comboAsignatura.getValue();
@@ -77,8 +82,9 @@ public class InscribirHorarioController {
         List<Clase> clases = claseRepository.findByAsignatura(asignatura);
         tablaClases.getItems().setAll(clases);
     }
+
     // ============================
-    // AGREGAR CLASE
+    // AGREGAR CLASE AL HORARIO
     // ============================
     @FXML
     public void agregarClase() {
@@ -91,87 +97,47 @@ public class InscribirHorarioController {
                 return;
             }
 
-            Estudiante est = this.estudiante;
-
             horarioService.agregarClase(
-                    est.getHorario().getId(),
+                    estudiante.getHorario().getId(),
                     clase.getId()
             );
+
+            // Refrescar desde la BD
+            this.estudiante = estudianteService.obtenerEstudiante(estudiante.getId());
+
             lblMensaje.setStyle("-fx-text-fill:green;");
             lblMensaje.setText("Clase agregada exitosamente.");
 
-            actualizarCalendario();
+            actualizarBarraCreditos();
 
         } catch (Exception ex) {
             lblMensaje.setStyle("-fx-text-fill:red;");
             lblMensaje.setText(ex.getMessage());
         }
     }
+
     // ============================
-    // CONSTRUIR GRID VACÍO
+    // CÁLCULO DE CRÉDITOS
     // ============================
-    private void construirCalendario() {
-
-        gridCalendario.getChildren().clear();
-        gridCalendario.getColumnConstraints().clear();
-        gridCalendario.getRowConstraints().clear();
-
-        // Columnas (LUN-SAB)
-        String[] dias = {"LUN", "MAR", "MIE", "JUE", "VIE", "SAB"};
-
-        // Primera fila: encabezados
-        gridCalendario.add(new Label(""), 0, 0); // esquina vacía
-
-        for (int col = 0; col < dias.length; col++) {
-            Label lbl = new Label(dias[col]);
-            lbl.setStyle("-fx-font-weight: bold;");
-            gridCalendario.add(lbl, col + 1, 0);
-        }
-
-        // Filas de horas: 8 AM → 6 PM
-        int row = 1;
-        for (int hora = 8; hora <= 18; hora++) {
-
-            Label lblHora = new Label(hora + ":00");
-            gridCalendario.add(lblHora, 0, row);
-
-            for (int col = 1; col <= 6; col++) {
-                Pane celda = new Pane();
-                celda.setStyle("-fx-background-color:white; -fx-border-color:#d0d0d0;");
-                gridCalendario.add(celda, col, row);
-            }
-
-            row++;
-        }
+    private int calcularCreditos() {
+        return estudiante.getHorario().getClases().stream()
+                .mapToInt(c -> c.getAsignatura().getCreditos())
+                .sum();
     }
-    // ============================
-    // ACTUALIZAR CALENDARIO
-    // ============================
-    private void actualizarCalendario() {
 
-        construirCalendario();
+    private void actualizarBarraCreditos() {
+        int total = calcularCreditos();
+        barraCreditos.setProgress(total / 20.0);
+        lblCreditos.setText(total + "/20 créditos");
+    }
 
-        Estudiante est = this.estudiante;
+    @FXML
+    void regresarMenu(ActionEvent event) {
+        App.setRoot(Paths.MENU_ESTUDIANTE);
+    }
 
-        List<Clase> clases = estudiante.getHorario().getClases();
-
-        for (Clase clase : clases) {
-
-            int col = clase.getDia().ordinal() + 1;   // LUN=0 → columna 1
-            int row = clase.getHoraInicio().getHour() - 7;
-
-            Label lbl = new Label(
-                    clase.getAsignatura().getNombre() +
-                            " (" + clase.getHoraInicio() + ")"
-            );
-
-            lbl.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; " +
-                    "-fx-padding: 4; -fx-font-size: 12;");
-
-            StackPane contenedor = new StackPane(lbl);
-            contenedor.setAlignment(Pos.CENTER);
-
-            gridCalendario.add(contenedor, col, row);
-        }
+    @FXML
+    void verHorario(ActionEvent event) {
+        App.setRoot(Paths.VER_HORARIO);
     }
 }

@@ -191,7 +191,6 @@ public class CrudClaseController {
             mostrarError("Debes seleccionar una clase.");
             return;
         }
-
         try {
             Clase claseEditada = construirClaseDesdeFormulario();
 
@@ -199,45 +198,14 @@ public class CrudClaseController {
                     seleccionada.getId(),
                     claseEditada
             );
-
             mostrarAlerta("Clase actualizada correctamente.");
             cargarClases();
 
         } catch (Exception e) {
-            // Imprimir error completo en consola
-            System.err.println("=== ERROR AL ACTUALIZAR CLASE ===");
-            System.err.println("Mensaje: " + e.getMessage());
             e.printStackTrace();
-            System.err.println("=================================");
             mostrarError(e.getMessage());
         }
     }
-
-    // ====== Eliminar clase (solo la clase seleccionada) ======
-    @FXML
-    void eliminarClase(ActionEvent event) {
-        Clase seleccionada = tblClases.getSelectionModel().getSelectedItem();
-
-        if (seleccionada == null) {
-            mostrarError("Debes seleccionar una clase para eliminar.");
-            return;
-        }
-
-        try {
-            claseService.eliminarClase(seleccionada.getId());
-            mostrarAlerta("Clase eliminada correctamente.");
-            cargarClases();
-            limpiarCampos();
-        } catch (Exception e) {
-            // Imprimir error completo en consola
-            System.err.println("=== ERROR AL ELIMINAR CLASE ===");
-            System.err.println("Mensaje: " + e.getMessage());
-            e.printStackTrace();
-            System.err.println("===============================");
-            mostrarError("Error al eliminar clase: " + e.getMessage());
-        }
-    }
-
     // ====== Eliminar grupo de clases (redirige a pantalla de eliminar) ======
     @FXML
     void eliminarGrupoClases(ActionEvent event) {
@@ -342,7 +310,7 @@ public class CrudClaseController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-
+    @FXML
     private void limpiarCampos() {
         cmbAsignatura.setValue(null);
         cmbDia.setValue(null);
@@ -379,19 +347,12 @@ public class CrudClaseController {
         // Semestre
         cmbSemestre.setValue(clase.getSemestre());
         
-        // Profesores (desde asignaciones)
-        System.out.println("=== DEBUG: Cargando profesores ===");
-        System.out.println("Clase ID: " + clase.getId());
-        System.out.println("Asignaciones: " + (clase.getAsignaciones() != null ? clase.getAsignaciones().size() : "null"));
-        
-        if (clase.getAsignaciones() != null && !clase.getAsignaciones().isEmpty()) {
+       if(clase.getAsignaciones() != null && !clase.getAsignaciones().isEmpty()) {
             List<Profesor> profesores = clase.getAsignaciones().stream()
                     .filter(a -> a.getProfesor() != null)
                     .map(Asignacion::getProfesor)
                     .distinct()
                     .collect(Collectors.toList());
-            
-            System.out.println("Profesores encontrados: " + profesores.size());
             
             if (!profesores.isEmpty()) {
                 cmbProfesor1.setValue(profesores.get(0));
@@ -412,6 +373,6 @@ public class CrudClaseController {
             cmbProfesor2.setValue(null);
             System.out.println("No hay asignaciones para esta clase");
         }
-        System.out.println("================================");
     }
+
 }

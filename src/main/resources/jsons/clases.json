@@ -1,0 +1,21 @@
+[
+  {
+    "dia": "LUNES",
+    "horaInicio": "08:00",
+    "horaFin": "10:00",
+    "semestreId": 2,
+    "asignaturaId": 1,
+    "salonId": 1,
+    "profesorId": 1
+  },
+  {
+    "dia": "MIERCOLES",
+    "horaInicio": "14:00",
+    "horaFin": "16:00",
+    "semestreId": 2,
+    "asignaturaId": 1,
+    "salonId": 2,
+    "profesorId": 1
+  }
+]
+

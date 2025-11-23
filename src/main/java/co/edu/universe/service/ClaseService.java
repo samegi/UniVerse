@@ -185,7 +185,6 @@ public class ClaseService {
                 //      GUARDAR CLASE
                 // -------------------------------
                 Clase creada = repoClase.save(clase);
-                clasesCreadas.add(creada);
 
                 // -------------------------------
                 //      PROFESOR (Asignación)
@@ -198,21 +197,41 @@ public class ClaseService {
                         .orElseThrow(() -> new IllegalArgumentException("Profesor no encontrado"));
 
                 Asignacion asignacion = new Asignacion();
-                asignacion.setClase(clase);
+                asignacion.setClase(creada);
                 asignacion.setProfesor(profesor);
 
                 repoAsignacion.save(asignacion);
 
                 // Agregar lista a clase si la quieres reflejada en el objeto
-                clase.getAsignaciones().add(asignacion);
+                if (creada.getAsignaciones() == null) {
+                    creada.setAsignaciones(new ArrayList<>());
+                }
+                creada.getAsignaciones().add(asignacion);
 
-                clasesCreadas.add(clase);
+                // Agregar la clase creada a la lista (solo una vez)
+                clasesCreadas.add(creada);
             }
 
             return clasesCreadas;
 
         } catch (IOException e) {
+            System.err.println("=== ERROR AL LEER JSON ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("=========================");
             throw new RuntimeException("Error leyendo JSON: " + e.getMessage(), e);
+        } catch (IllegalArgumentException e) {
+            System.err.println("=== ERROR DE VALIDACIÓN EN JSON ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("===================================");
+            throw e; // Re-lanzar para que el controlador lo capture
+        } catch (Exception e) {
+            System.err.println("=== ERROR INESPERADO AL CARGAR CLASES ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("=========================================");
+            throw new RuntimeException("Error inesperado al cargar clases desde JSON: " + e.getMessage(), e);
         }
     }
 

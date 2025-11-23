@@ -37,7 +37,7 @@ public class Clase {
     private Asignatura asignatura;
 
     @OneToMany(mappedBy = "clase", fetch = FetchType.EAGER)
-    private List<Asignacion> asignaciones;
+    private List<Asignacion> asignaciones = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "salon_id", nullable = false)

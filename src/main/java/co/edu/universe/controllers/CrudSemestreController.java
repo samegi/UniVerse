@@ -25,6 +25,7 @@ public class CrudSemestreController {
     @FXML private Button btnActualizar;
     @FXML private Button btnEliminar;
     @FXML private Button btnGuardar;
+    @FXML private Button btnLimpiar;
     @FXML private Button btnVolver;
 
     @FXML private TableColumn<Semestre, String> colFechaFin;
@@ -181,6 +182,15 @@ public class CrudSemestreController {
             mostrar("Error al eliminar semestre: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
+    // --------------------------------------------------------------
+    // LIMPIAR FORMULARIO
+    // --------------------------------------------------------------
+    @FXML
+    void limpiarFormulario(ActionEvent event) {
+        limpiarCampos();
+        tblSemestre.getSelectionModel().clearSelection();
+    }
+
     // --------------------------------------------------------------
     // NAVEGACIÓN
     // --------------------------------------------------------------

@@ -240,19 +240,40 @@ public class CrudClaseController {
 
             // Si quieres refrescar la tabla
             cargarClases();
+            
+            mostrarAlerta("Se cargaron " + creadas.size() + " clase(s) correctamente.");
 
         } catch (Exception e) {
-            mostrarError("Error al cargar JSON: " + e.getMessage());
+            // Imprimir error completo en consola
+            System.err.println("=== ERROR AL CARGAR JSON ===");
+            System.err.println("Mensaje: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("============================");
+            
+            // Mostrar mensaje de error al usuario
+            String mensajeError = "Error al cargar JSON: " + e.getMessage();
+            if (e.getCause() != null) {
+                mensajeError += "\nCausa: " + e.getCause().getMessage();
+            }
+            mostrarError(mensajeError);
         }
     }
 
 
     // ====== Utilidades ======
     private void mostrarError(String msg) {
-        new Alert(Alert.AlertType.ERROR, msg).show();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
     private void mostrarAlerta(String msg) {
-        new Alert(Alert.AlertType.INFORMATION, msg).show();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

@@ -5,14 +5,15 @@ import co.edu.universe.model.Clase;
 import co.edu.universe.service.ClaseService;
 import co.edu.universe.service.ReporteService;
 import co.edu.universe.utils.Paths;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -60,6 +61,14 @@ public class EliminarClaseController {
         });
 
         graficoClases.getData().add(serie);
+
+        // Esperar a que la escena cargue el nodo de la serie
+        Platform.runLater(() -> {
+            Node nodoSerie = serie.getNode();
+            if (nodoSerie != null) {
+                nodoSerie.getStyleClass().add("serie-estudiantes");
+            }
+        });
     }
 
     private void cargarClases() {
@@ -75,21 +84,15 @@ public class EliminarClaseController {
             return;
         }
 
-        // 1️⃣ Ejecutar eliminación y obtener reporte
         List<String> reporte = claseService.eliminarClaseYRetirarEstudiantes(seleccionada.getId());
-
-        // 2️⃣ Actualizar la UI
         cargarGrafico();
         cargarClases();
 
-        // 3️⃣ Generar CSV
         File csv = reporteService.exportarReporteCSV(reporte, "reporte_clase_" + seleccionada.getId());
 
-        // 4️⃣ GUARDAR LOS DATOS PARA EL BOTÓN "EXPORTAR CSV"
         ultimoReporte = reporte;
         ultimoArchivoCsv = csv;
 
-        // 5️⃣ Mostrar ruta del archivo
         mostrar("Reporte CSV generado en:\n" + csv.getAbsolutePath());
     }
 

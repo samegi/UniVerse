@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="384.0" prefWidth="700" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.EliminarClaseController">
-
     <children>
         <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -21,7 +20,7 @@
 
         <Label layoutX="20.0" layoutY="292.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Eliminar Clase" />
 
-        <BarChart fx:id="graficoClases" layoutX="20.0" layoutY="56.0" prefHeight="250" prefWidth="660">
+        <BarChart fx:id="graficoClases" layoutX="20.0" layoutY="56.0" prefHeight="250" prefWidth="660" stylesheets="@../styles/app.css">
             <xAxis>
                 <CategoryAxis label="Clase" prefHeight="42.0" prefWidth="582.0" />
             </xAxis>

@@ -81,3 +81,10 @@
 .table-row-cell:selected {
     -fx-background-color: #b5d9ff !important;
 }
+.chart-bar.series0 {
+    -fx-bar-fill: #106585;
+}
+
+.chart-legend-item-symbol.series0 {
+    -fx-background-color: #106585;
+}

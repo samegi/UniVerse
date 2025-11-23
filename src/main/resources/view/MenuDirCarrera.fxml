@@ -14,10 +14,10 @@
             <Image url="@../images/MenuDirCarrera.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="btnSemestre" layoutX="79.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarSemestre" prefHeight="25.0" prefWidth="77.0" text="Semestre" />
+      <Button fx:id="btnSemestre" layoutX="79.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarSemestre" prefHeight="25.0" prefWidth="77.0" text="Semestres" />
       <Button fx:id="btnSalir" layoutX="487.0" layoutY="14.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="25.0" prefWidth="99.0" text="Cerrar Sesion" />
-      <Button fx:id="btnAsignatura" layoutX="202.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarAsignatura" prefHeight="25.0" prefWidth="77.0" text="Asignatura" />
-      <Button fx:id="btnClase" layoutX="322.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarClase" prefHeight="25.0" prefWidth="77.0" text="Clase" />
+      <Button fx:id="btnAsignatura" layoutX="199.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarAsignatura" prefHeight="25.0" prefWidth="84.0" text="Asignaturas" />
+      <Button fx:id="btnClase" layoutX="322.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarClase" prefHeight="25.0" prefWidth="77.0" text="Clases" />
       <Button fx:id="btnEstudiantes" layoutX="440.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarConsultaEstudiantes" prefHeight="25.0" prefWidth="77.0" text="Estudiantes" />
       <Text layoutX="187.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crea, elimina o actualiza una asignatura" textAlignment="CENTER" wrappingWidth="105.0">
          <font>
@@ -30,6 +30,11 @@
          </font>
       </Text>
       <Text layoutX="307.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crea, elimina o actualiza una clase" textAlignment="CENTER" wrappingWidth="105.0">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Text>
+      <Text layoutX="426.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Consulta clases y estudiantes" textAlignment="CENTER" wrappingWidth="105.0">
          <font>
             <Font size="9.0" />
          </font>

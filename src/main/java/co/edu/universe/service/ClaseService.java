@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ClaseService {
@@ -239,6 +240,9 @@ public class ClaseService {
     @Transactional
     public Clase updateClase(Long id, Clase updatedClase) {
         validarCreacionDeClase(updatedClase);
+        
+        // Configurar el ID en updatedClase para que la validación excluya esta clase
+        updatedClase.setId(id);
         validarDisponibilidadSalon(updatedClase);
 
         Clase claseActualizada = repoClase.findById(id)
@@ -252,6 +256,25 @@ public class ClaseService {
                     return repoClase.save(clase);
                 })
                 .orElseThrow(() -> new RuntimeException("Clase no encontrada"));
+
+        // Actualizar profesores: agregar los nuevos que no estén ya asignados
+        if (updatedClase.getProfesoresTemporales() != null && !updatedClase.getProfesoresTemporales().isEmpty()) {
+            // Obtener profesores actualmente asignados
+            List<Asignacion> asignacionesActuales = repoAsignacion.findByClase(claseActualizada);
+            Set<Long> profesoresActualesIds = asignacionesActuales.stream()
+                    .map(a -> a.getProfesor().getId())
+                    .collect(Collectors.toSet());
+            
+            // Agregar solo los profesores nuevos que no estén ya asignados
+            for (Profesor profesor : updatedClase.getProfesoresTemporales()) {
+                if (profesor.getId() == null) {
+                    throw new IllegalArgumentException("Cada profesor debe tener un ID válido");
+                }
+                if (!profesoresActualesIds.contains(profesor.getId())) {
+                    asignacionService.crearAsignacion(profesor, claseActualizada);
+                }
+            }
+        }
 
         asignacionService.actualizarNocturnidadDeClase(claseActualizada);
 

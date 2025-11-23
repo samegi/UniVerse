@@ -49,6 +49,14 @@ public class MenuDirCarreraController {
     void gestionarAsignatura(ActionEvent event) {
         App.setRoot(Paths.CRUD_ASIGNATURA);      // Va a CrudAsignatura.fxml
     }
+    // -------------------------------------------------------------
+    //                    CONSULTA ESTUDIANTES
+    // -------------------------------------------------------------
+
+    @FXML
+    void gestionarConsultaEstudiantes(ActionEvent event) {
+        App.setRoot(Paths.CONSULTA_ESTUDIANTES);
+    }
 
     // -------------------------------------------------------------
     //                    GESTIONAR CLASE (Vacío)

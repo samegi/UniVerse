@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="500" prefWidth="800" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.ConsultaAcademicaController">
+
+    <children>
+      <ImageView fitHeight="538.0" fitWidth="888.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/ConsultaEstudiantes.jpg" />
+         </image>
+      </ImageView>
+
+        <TabPane layoutX="64.0" layoutY="20.0" prefHeight="429.0" prefWidth="738.0">
+
+            <!-- ===================================================== -->
+            <!-- TAB 1: Estudiantes inscritos en una clase -->
+            <!-- ===================================================== -->
+            <tabs>
+                <Tab text="Estudiantes por Clase">
+
+                    <AnchorPane prefHeight="399.0" prefWidth="760.0">
+
+                        <children>
+
+                            <Label layoutX="20" layoutY="20" style="-fx-font-weight: bold;" text="Asignatura:" />
+
+                            <ComboBox fx:id="comboAsignatura" layoutX="120" layoutY="16" prefWidth="200" />
+
+                            <Label layoutX="350" layoutY="20" style="-fx-font-weight: bold;" text="Clase:" />
+
+                            <ComboBox fx:id="comboClase" layoutX="400" layoutY="16" prefWidth="220" />
+
+
+                            <!-- Tabla de estudiantes -->
+                            <TableView fx:id="tablaEstudiantes" layoutX="13.0" layoutY="65.0" prefHeight="300.0" prefWidth="722.0">
+
+                                <columns>
+                                    <TableColumn fx:id="colEstNombre" prefWidth="250" text="Nombre" />
+                                    <TableColumn fx:id="colEstCorreo" prefWidth="200" text="Correo" />
+                                    <TableColumn fx:id="colEstPrograma" prefWidth="250" text="Programa" />
+                                </columns>
+
+                            </TableView>
+
+                        </children>
+
+                    </AnchorPane>
+
+                </Tab>
+
+                <!-- ===================================================== -->
+                <!-- TAB 2: Asignaturas inscritas por un estudiante -->
+                <!-- ===================================================== -->
+                <Tab text="Asignaturas por Estudiante">
+
+                    <AnchorPane>
+
+                        <children>
+
+                            <Label layoutX="20" layoutY="20" style="-fx-font-weight: bold;" text="Estudiante:" />
+
+                            <ComboBox fx:id="comboEstudiante" layoutX="120" layoutY="16" prefWidth="250" />
+
+
+                            <!-- Tabla de clases -->
+                            <TableView fx:id="tablaClases" layoutX="20" layoutY="60" prefHeight="300.0" prefWidth="720">
+
+                                <columns>
+                                    <TableColumn fx:id="colAsig" prefWidth="195.0" text="Asignatura" />
+                                    <TableColumn fx:id="colProf" prefWidth="215.0" text="Profesor" />
+                                    <TableColumn fx:id="colDia" prefWidth="100.0" text="Día" />
+                                    <TableColumn fx:id="colInicio" prefWidth="100" text="Inicio" />
+                                    <TableColumn fx:id="colFin" prefWidth="100" text="Fin" />
+                                </columns>
+
+                            </TableView>
+
+                        </children>
+
+                    </AnchorPane>
+
+                </Tab>
+            </tabs>
+
+        </TabPane>
+      <Button layoutX="396.0" layoutY="461.0" mnemonicParsing="false" onAction="#regresarMenu" text="Menu Principal" />
+
+    </children>
+
+</AnchorPane>

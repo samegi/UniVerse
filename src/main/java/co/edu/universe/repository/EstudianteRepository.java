@@ -27,6 +27,14 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
     WHERE e.id = :id
 """)
     Optional<Estudiante> obtenerEstudianteCompleto(Long id);
+    @Query("""
+    SELECT e 
+    FROM Estudiante e
+    JOIN e.horario h
+    JOIN h.clases c
+    WHERE c.id = :claseId
+""")
+    List<Estudiante> findEstudiantesByClase(Long claseId);
 
 }
 

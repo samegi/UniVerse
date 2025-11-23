@@ -18,7 +18,7 @@
       <Button fx:id="btnSalir" layoutX="487.0" layoutY="14.0" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="25.0" prefWidth="99.0" text="Cerrar Sesion" />
       <Button fx:id="btnAsignatura" layoutX="202.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarAsignatura" prefHeight="25.0" prefWidth="77.0" text="Asignatura" />
       <Button fx:id="btnClase" layoutX="322.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarClase" prefHeight="25.0" prefWidth="77.0" text="Clase" />
-      <Button layoutX="440.0" layoutY="266.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Estudiantes" />
+      <Button fx:id="btnEstudiantes" layoutX="440.0" layoutY="266.0" mnemonicParsing="false" onAction="#gestionarConsultaEstudiantes" prefHeight="25.0" prefWidth="77.0" text="Estudiantes" />
       <Text layoutX="187.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crea, elimina o actualiza una asignatura" textAlignment="CENTER" wrappingWidth="105.0">
          <font>
             <Font size="9.0" />

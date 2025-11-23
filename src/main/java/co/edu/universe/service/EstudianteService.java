@@ -64,6 +64,9 @@ public class EstudianteService {
         return estudianteRepository.obtenerEstudianteCompleto(id)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
+    public List<Estudiante> obtenerEstudiantesPorClase(Long claseId) {
+        return estudianteRepository.findEstudiantesByClase(claseId);
+    }
 
     public List<Estudiante> listarEstudiantes() {
         return estudianteRepository.findAll();

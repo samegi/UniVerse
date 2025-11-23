@@ -13,5 +13,6 @@ public class Paths {
     public static final String VER_HORARIO = "/view/VerHorario.fxml";
     public static final String INSCRIBIR =  "/view/InscribirHorario.fxml";
     public static final String ELIMINAR_CLASE_HORARIO = "/view/EliminarClaseHorario.fxml";
+    public static final String CONSULTA_ESTUDIANTES = "/view/ConsultaAcademica.fxml";
 
 }

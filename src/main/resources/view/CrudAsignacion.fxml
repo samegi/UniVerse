@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.universe.controllers.CrudAsignacionController">
+
+    <children>
+
+        <!-- Fondo -->
+        <ImageView fitHeight="400.0" fitWidth="650.0" pickOnBounds="true" preserveRatio="false">
+            <image>
+                <Image url="@../images/ConsultaEstudiantes.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Label Profesor -->
+        <Label layoutX="30" layoutY="40" style="-fx-text-fill: black; -fx-font-weight: bold;" text="Profesor:" />
+
+        <!-- Combo de Profesor -->
+        <ComboBox fx:id="cmbProfesor" layoutX="120" layoutY="36" prefWidth="200" />
+
+        <!-- Label Clase -->
+        <Label layoutX="30" layoutY="90" style="-fx-text-fill: black; -fx-font-weight: bold;" text="Clase:" />
+
+        <!-- Combo de Clase -->
+        <ComboBox fx:id="cmbClase" layoutX="120" layoutY="86" prefWidth="200" />
+
+        <!-- Botón Guardar -->
+        <Button fx:id="btnGuardar" layoutX="350" layoutY="36" onAction="#guardarAsignacion" style="-fx-background-color: #106585; -fx-text-fill: white;" text="Guardar" />
+
+        <!-- Botón Eliminar -->
+        <Button fx:id="btnEliminar" layoutX="350" layoutY="86" onAction="#eliminarAsignacion" style="-fx-background-color: #a62c2c; -fx-text-fill: white;" text="Eliminar" />
+
+        <!-- Tabla -->
+        <TableView fx:id="tblAsignaciones" layoutX="30" layoutY="150" prefHeight="210" prefWidth="590">
+
+            <columns>
+
+                <TableColumn fx:id="colProfesor" prefWidth="150" text="Profesor" />
+                <TableColumn fx:id="colClase" prefWidth="180" text="Clase" />
+                <TableColumn fx:id="colHoras" prefWidth="100" text="Horas" />
+                <TableColumn fx:id="colNocturna" prefWidth="100" text="Nocturna" />
+
+            </columns>
+
+        </TableView>
+
+        <!-- Botón Volver -->
+        <Button fx:id="btnVolver" layoutX="295.0" layoutY="363.0" onAction="#regresarMenu" style="-fx-background-color: grey; -fx-text-fill: white;" text="Volver" />
+
+    </children>
+</AnchorPane>

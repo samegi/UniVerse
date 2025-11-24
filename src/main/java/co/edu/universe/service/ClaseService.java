@@ -147,6 +147,9 @@ public class ClaseService {
                 // -------------------------------
                 //      HORARIOS
                 // -------------------------------
+                if (!item.containsKey("horaInicio") || !item.containsKey("horaFin")) {
+                    throw new IllegalArgumentException("Cada clase debe incluir 'horaInicio' y 'horaFin'.");
+                }
                 clase.setHoraInicio(LocalTime.parse(item.get("horaInicio").toString()));
                 clase.setHoraFin(LocalTime.parse(item.get("horaFin").toString()));
 

@@ -14,5 +14,7 @@ public class Paths {
     public static final String INSCRIBIR =  "/view/InscribirHorario.fxml";
     public static final String ELIMINAR_CLASE_HORARIO = "/view/EliminarClaseHorario.fxml";
     public static final String CONSULTA_ESTUDIANTES = "/view/ConsultaAcademica.fxml";
-
+    public static final String MENU_DIR_DEPARTAMENTO = "/view/MenuDirDepartamento.fxml";
+    public static final String CRUD_ASIGNACION = "/view/CrudAsignacion.fxml";
+    public static final String REPORTE_PROFE = "/view/ReporteProfesor.fxml";
 }

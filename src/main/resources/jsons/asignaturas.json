@@ -1,0 +1,14 @@
+[
+  {
+    "nombre": "Matemáticas I",
+    "creditos": 3,
+    "ingles": false,
+    "semestreId": 2
+  },
+  {
+    "nombre": "Vectorial",
+    "creditos": 2,
+    "ingles": false,
+    "semestreId": 2
+  }
+]

@@ -54,9 +54,10 @@ public class LoginController {
                 App.setRoot(Paths.MENU_DIR_CARRERA);
             }
             else if (rol.equalsIgnoreCase("ESTUDIANTE")) {
-                System.out.println("Usuario logueado: " + usuario.getNombre());
-                System.out.println("Estudiante asociado: " + usuario.getEstudiante());
                 App.setRoot(Paths.MENU_ESTUDIANTE);
+            }
+            else if (rol.equalsIgnoreCase("DIRECTOR_DEPARTAMENTO")) {
+                App.setRoot(Paths.MENU_DIR_DEPARTAMENTO);
             }
 
         } catch (Exception e) {

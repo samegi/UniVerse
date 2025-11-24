@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,7 +24,10 @@ public class Clase {
     @Enumerated(EnumType.STRING)
     private DiaSemana dia;
 
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime horaInicio;
+
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime horaFin;
 
     @ManyToOne(fetch = FetchType.LAZY)

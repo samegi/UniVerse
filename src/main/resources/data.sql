@@ -5,20 +5,20 @@ MERGE INTO rol (id, nombre_rol) KEY (id)
     (1, 'ADMIN'),
     (2, 'ESTUDIANTE'),
     (3, 'DIRECTOR_CARRERA'),
-    (4, 'PROFESOR');
+    (4, 'DIRECTOR_DEPARTAMENTO');
 
 -- === Usuarios ===
 INSERT INTO usuario (nombre, rol_id)
 SELECT 'samegi', 3 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 1); -- DIRECTOR_CARRERA
 
--- INSERT INTO usuario (id, nombre, role_id)
--- SELECT 2, 'Carlos Mendoza', 4 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 2); -- DIRECTOR_DEPARTAMENTO
+INSERT INTO usuario (nombre, rol_id)
+SELECT  'Departamento', 4 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 2); -- DIRECTOR_DEPARTAMENTO
 
 -- INSERT INTO usuario (id, nombre, role_id)
 -- SELECT 3, 'Ana Gómez', 2 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 3); -- PROFESOR
 
--- INSERT INTO usuario (id, nombre, role_id)
--- SELECT 4, 'Juan Pérez', 1 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 4); -- ESTUDIANTE
+INSERT INTO usuario (nombre, rol_id)
+SELECT 'Numa', 2 WHERE NOT EXISTS (SELECT 1 FROM usuario WHERE id = 4); -- ESTUDIANTE
 
 -- === Departamento ===
 INSERT INTO departamento (id, nombre)

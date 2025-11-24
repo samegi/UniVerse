@@ -27,8 +27,8 @@ public class Profesor {
     @Enumerated(EnumType.STRING)
     private CategoriaCatedra categoria;
 
-    @OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Asignacion> asignaciones = new ArrayList<>();
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.EAGER)
+    private List<Asignacion> asignaciones;
 
     @ManyToOne
     private Departamento departamento;

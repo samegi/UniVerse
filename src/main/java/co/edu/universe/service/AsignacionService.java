@@ -79,8 +79,8 @@ public class AsignacionService {
         asignacionRepository.delete(asignacion);
     }
 
-    public List<Asignacion> obtenerPorClase(Clase clase) {
-        return asignacionRepository.findByClase(clase);
+    public List<Asignacion> obtenerAsignaciones() {
+        return asignacionRepository.findAll();
     }
 
     public void actualizarNocturnidadDeClase(Clase clase) {
